@@ -1,0 +1,25 @@
+{
+  "name": "kevinu",
+  "version": "1.0.0",
+  "description": "repository for my personal website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "author": "Kevin J. Urban",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^4.2.8",
+    "express": "^4.17.1",
+    "file-loader": "^4.0.0",
+    "image-webpack-loader": "^5.0.0",
+    "isomorphic-fetch": "^2.2.1",
+    "next": "^8.1.0",
+    "node-fetch": "^2.6.0",
+    "path": "^0.12.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
