@@ -15,6 +15,13 @@ class quake extends Component {
     gun: 'Gauntlet'
   }
 
+  /**This onSubmit function searches for the username given in the search bar
+   * via a fetch request then returns the results if they are valid,
+   * or exits if they are not
+   * NOTE: There's still some odd behavior with names that are not valid AND below
+   * a certain number of characters. Still investigating how to fix as this is
+   * causing issues for some valid names with shorter length
+   */
   onSubmit = (e) => {
     e.preventDefault();
     if (this.state.playerName.length <= 4) {
@@ -31,7 +38,7 @@ class quake extends Component {
     .then(json => {
       this.setState({playerName: ''});
       if (json.code === 404 ) { this.setState({player: {}}); alert('player name is invalid'); return;}
-      console.log(json); 
+      //console.log(json); 
       this.setState({player: json}); 
     });
   }
@@ -43,6 +50,10 @@ class quake extends Component {
     this.setState({gun: key});
   }
 
+  /**checks the given numerical value of a given rank and then returns the path
+   * to the image with that rank. The path is removed via regex to display 
+   * the rank name on the other side
+   */
   returnRankingSymbol = (num) => {
     var precursor = '../../static/quake/ranks/';
     if (num <= 774) return `${precursor}Bronze-1.png`;
@@ -105,7 +116,7 @@ class quake extends Component {
           </form>
           <div className="details"><br />
             <h3>Current Player: {this.state.player.name}</h3><br />
-            {basePlayerInfo}
+            {basePlayerInfo} {/**Our conditional rendering componenet from above */}
             <hr />
             <div className="row">
               <div id="wepDiv" className="col-sm-5">
@@ -115,6 +126,8 @@ class quake extends Component {
                 <GunLoop setGun={this.setGun}/>
               </div>
               <div className="col-sm-7">
+                {/**This componenet actually calculates the stats for each weapon
+                    based on the given data */}
                 <Stats gun={this.state.gun} player={this.state.player}/>
               </div>
             </div>

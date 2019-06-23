@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 
 class stats extends Component {
 
+  /**returns the weapon name as represented inside of the JSON values that 
+   * they are stored as
+   */
   gunJsonName = (gun) => {
     switch(gun) {
       case 'Gauntlet':
@@ -29,7 +32,10 @@ class stats extends Component {
     }
   }
 
-  loopChampions = (gun, player) => {
+  /**loops over the list of given champiions (if valid) and then returns
+   * an object with all calculated values of importance
+   */
+  loopChampionsAndGrabStats = (gun, player) => {
     if (JSON.stringify(player) === '{}') return {accuracy:'N/A', damage:'N/A', kills:'N/A', headshots:'N/A'};
     var hits = 0;
     var shots = 0;
@@ -52,7 +58,7 @@ class stats extends Component {
   }
 
   render() {
-    const gunStats = this.loopChampions(this.gunJsonName(this.props.gun), this.props.player);
+    const gunStats = this.loopChampionsAndGrabStats(this.gunJsonName(this.props.gun), this.props.player);
     
     return(
       <div>
