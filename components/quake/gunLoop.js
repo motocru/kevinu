@@ -51,7 +51,7 @@ class gunLoop extends Component {
   render() {
    return weapons.map(wep => (
      <div>
-       <img className="qGuns" src={wep.path} alt={wep.key} onClick={this.props.setGun(wep.key)}/>
+       <img className="qGuns" src={wep.path} alt={wep.key} onClick={() => this.props.setGun(wep.key)}/>
        <style jsx>{`
       .qGuns {
         display: block;
@@ -62,16 +62,7 @@ class gunLoop extends Component {
       }
      `}</style>
      </div>
-     
    ));
   }
 }
 export default gunLoop;
-
-class gunPhoto extends Component {
-  render() {
-    return(
-      <div></div>
-    );
-  }
-} 
