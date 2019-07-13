@@ -11,15 +11,19 @@
   "author": "Kevin J. Urban",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "file-loader": "^4.0.0",
     "image-webpack-loader": "^5.0.0",
     "isomorphic-fetch": "^2.2.1",
-    "next": "^8.1.0",
+    "mongodb": "^3.2.7",
+    "next": "^9.0.0",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "uuid": "^3.3.2"
   }
 }
