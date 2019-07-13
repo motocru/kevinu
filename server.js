@@ -1,5 +1,9 @@
 const express = require('express');
+const session = require('express-session');
 const next = require('next');
+const bodyParser = require('body-parser');
+
+const api = require('./server/api');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
@@ -9,6 +13,16 @@ app
   .prepare()
   .then(() => {
     const server = express();
+    server.use(bodyParser.json());
+    server.use(bodyParser.urlencoded({ extended: false }));
+    server.use(session({
+      secret: 'SEN.BLUTARSKY',
+      resave: false,
+      saveUninitialized: true,
+      cookie: {secure: false}
+    }))
+
+    //server.use('/api', api);
 
     server.get('*', (req, res) => {
       return handle(req, res);
