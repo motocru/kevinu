@@ -1,0 +1,91 @@
+{
+    "fonts": [
+        {
+            "category": "Sans Serif",
+            "family": "Lato",
+            "rule": "sans-serif",
+            "url": "https://fonts.googleapis.com/css?family=Lato"
+        },
+        {
+            "category": "Display",
+            "family": "Lobster",
+            "rule": "cursive",
+            "url": "https://fonts.googleapis.com/css?family=Lobster"
+        },
+        {
+            "category": "Handwriting",
+            "family": "Kavivanar",
+            "rule": "cursive",
+            "url": "https://fonts.googleapis.com/css?family=Kavivanar"
+        },
+        {
+            "category": "Sans Serif",
+            "family": "Oswald",
+            "rule": "sans-serif",
+            "url": "https://fonts.googleapis.com/css?family=Oswald"
+        },
+        {
+            "category": "Handwriting",
+            "family": "Indie Flower",
+            "rule": "cursive",
+            "url": "https://fonts.googleapis.com/css?family=Indie+Flower"
+        },
+        {
+            "category": "Monospace",
+            "family": "Roboto Mono",
+            "rule": "monospace",
+            "url": "https://fonts.googleapis.com/css?family=Roboto+Mono"
+        },
+        {
+            "category": "Display",
+            "family": "Geostar Fill",
+            "rule": "cursive",
+            "url": "https://fonts.googleapis.com/css?family=Geostar+Fill"
+        },
+        {
+            "category": "Sans Serif",
+            "family": "Russo One",
+            "rule": "sans-serif",
+            "url": "https://fonts.googleapis.com/css?family=Russo+One"
+        }
+    ],
+    "levels": [
+        {
+            "rounds": "8",
+            "maxLength": "5",
+            "minLength": "3",
+            "name": "Easy"
+        },
+        {
+            "rounds": "7",
+            "maxLength": "10",
+            "minLength": "4",
+            "name": "Medium"
+        },
+        {
+            "rounds": "6",
+            "maxLength": "300",
+            "minLength": "9",
+            "name": "Hard"
+        }
+    ],
+    "defaults": {
+        "colors": {
+            "guess": "#0ac90e",
+            "text": "#f00a0a",
+            "word": "#114fe4"
+        },
+        "font": {
+            "category": "Display",
+            "family": "Lobster",
+            "rule": "Impallari Type",
+            "url": "https://fonts.googleapis.com/css?family=Lobster"
+        },
+        "level": {
+            "rounds": "7",
+            "maxLength": "10",
+            "minLength": "4",
+            "name": "Medium"
+        }
+    }
+}

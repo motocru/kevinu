@@ -22,7 +22,7 @@ app
       cookie: {secure: false}
     }))
 
-    //server.use('/api', api);
+    server.use('/api', api);
 
     server.get('*', (req, res) => {
       return handle(req, res);
