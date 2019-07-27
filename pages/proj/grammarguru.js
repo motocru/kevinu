@@ -5,7 +5,8 @@ import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill(); //do I even need this?
 
 //Component Imports
-import Games from './../../components/grammarguru/games';
+import Games from '../../components/grammarguru/games';
+import GameModal from '../../components/grammarguru/gameModal';
 
 class grammarguru extends Component {
 
@@ -18,9 +19,10 @@ class grammarguru extends Component {
     level: 'Medium',
     games: [],
     fonts: [],
-    levels: []
+    levels: [],
+    modal: false,
+    game: {}
   }
-  
 
   componentDidMount() {
     /**sets/gets the player id based upon the session variable
@@ -33,17 +35,17 @@ class grammarguru extends Component {
     .then(res => res.json())
     .then(data => {
       this.setState({player: data.user});
-      this.populateUserGames(data.user);
+      this.populateUserGames(this.state.player);
     });
 
     /**Sets all the metadata values */
-    fetch('http://localhost:3000/api/wordgame/meta?', {
+    fetch('http://localhost:3000/api/wordgame/meta', {
       method: 'get'
     })
     .catch(err => {console.error(err); return;})
     .then(res => res.json())
     .then(data => {
-      this.setState({textcolor: data.defaults.colors.text, bodycolor: data.defaults.colors.word, 
+      this.setState({textcolor: data.defaults.colors.text, bodycolor: data.defaults.colors.body, 
         guesscolor: data.defaults.colors.guess, fonts: data.fonts, levels: data.levels, font: data.defaults.font.family,
         level: data.defaults.level.name});
     });
@@ -62,7 +64,36 @@ class grammarguru extends Component {
   }
 
   newGame = () => {
-    //console.log(`The value selected is ${this.state.level}`)
+    var colors = {textcolor: this.state.textcolor, 
+      bodycolor: this.state.bodycolor, guesscolor: this.state.guesscolor};
+    var body = { font: this.state.font, colors: colors};
+    fetch(`http://localhost:3000/api/wordgame/${this.state.player}?level=${this.state.level}`, {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: {'Content-Type': 'application/json'}
+    })
+    .catch(err => {console.error(err); return;})
+    .then(res => res.json())
+    .then(data => {
+      this.setState({game: data});
+      this.populateUserGames(this.state.player);
+      console.log(data);
+    });
+    this.toggle();
+  }
+
+  showModal = (game) => {
+    this.setState({game: game});
+    this.toggle();
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+  }
+
+  toggle = () => {
+    this.setState({modal: !this.state.modal});
   }
 
   onChange = (e) => {this.setState({[e.target.name]: e.target.value})};
@@ -135,6 +166,12 @@ class grammarguru extends Component {
               </div>
               {/**This div is for the New Game Button */}
               <div className="new-game col-sm-2">
+                <GameModal 
+                  modal={this.state.modal}
+                  toggle={this.toggle}
+                  onSubmit={this.onSubmit}
+                  showModal={this.showModal}
+                />
                 <button className="btn btn-primary float-right" onClick={this.newGame}><strong>New Game</strong></button>
               </div>
             </div>
@@ -150,9 +187,13 @@ class grammarguru extends Component {
                 <th>Status</th>
               </tr>
             </thead>
-            <Games games={this.state.games} />
+            <tbody>
+              <Games games={this.state.games} />
+            </tbody>
+            
           </table>
         </div>
+        
         <style jsx>{`
           .form-inline {
             display: flex;

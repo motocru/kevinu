@@ -73,7 +73,7 @@
         "colors": {
             "guess": "#0ac90e",
             "text": "#f00a0a",
-            "word": "#114fe4"
+            "body": "#114fe4"
         },
         "font": {
             "category": "Display",

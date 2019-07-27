@@ -2,6 +2,7 @@
 const express = require('express');
 const fs = require('fs');
 var router = express.Router();
+const fetch = require('isomorphic-fetch');
 
 const Metadata = require('../db/wordgame/metadata.json');
 
@@ -16,27 +17,6 @@ fs.readFile(require('path').resolve(__dirname, '../db/wordgame/wordlist.txt'), f
 });
 
 /**=====================ASSISTING FUNCTIONS=========================== */
-
-function Colors(guess, txt, word) {
-  this.guess = guess;
-  this.txt = txt;
-  this.word = word;
-}
-
-function Font(category, family, rule, url) {
-  this.category = category;
-  this.family = family;
-  this.rule = rule;
-  this.url = url;
-}
-
-function Level(rounds, maxLength, minLength, name) {
-  this.rounds = rounds;
-  this.maxLength = maxLength;
-  this.minLength = minLength;
-  this.name = name;
-}
-
 function wordPick(minLength, maxLength) {
   function getInt() {
     return Math.floor(Math.random() * Math.floor(wordlist.length));
@@ -59,15 +39,65 @@ router.get('/meta', function(req, res, next) {
   else {res.status(200).json(meta);}
 });
 
+/** */
 router.get('/:user', function(req, res, next) {
   games.findByOwner(req.params.user, function(err, games) {
-    if (err) {res.status(500).json([]);}
-    else {res.status(200).json(games);}
+    if (err) {console.error(err); res.status(500).json([]);}
+    else {
+      for (var i = 0; i < games.length; i++) {
+        if (games[i].status === "Unfinished") {delete games[i].word;}
+      }
+      res.status(200).json(games);
+    }
   });
 });
 
+/**adds a new game to the total list of games associated with a single session ID */
 router.post('/:user', function(req, res, next) {
-  
+  var skill = Metadata.levels.filter(level => level.name === req.query.level);
+  var word = wordPick(skill[0].minLength, skill[0].maxLength);
+  games.create(req.params.user, req.body.colors, req.body.font, skill[0], word, function(err, game) {
+    if (err) {res.status(500).json({'msg': 'internal server error'})}
+    else {
+      delete game["word"];
+      res.status(200).json(game);
+    }
+  });
+});
+
+/**Gets an individual game from the database and returns it if the user id
+ * matches the session ID
+ */
+router.get('/:user/:gid', function(req, res, next) {
+  console.log(req.session.user);
+  if (req.session.user.user !== req.params.user) {
+    res.status(401).json({"msg": "Unauthorized"});
+  } else {
+    games.find(req.params.gid, function(err, game) {
+      if (err) {res.status(500).json({"msg": "Internal Server Error"});}
+      else {res.status(200).json(game);}
+    });
+  }
+});
+
+/**handles a guess of a single letter toward the selected word */
+router.post('/:user/:gid/guess', function(req, res, next) {
+  fetch(`https://localhost:3000/api/wordgame/${req.params.user}/${req.params.gid}`, {
+    method: 'get'
+  })
+  .catch(err => {console.error(err); return;})
+  .then(res => res.json())
+  .then(data => {console.log(data);});
+  /*if (req.session.user.user !== req.params.user) {
+    res.status(401).json({"msg": "Unauthorized"});
+  } else {
+    if (err) {res.status(500).json({"msg": "Internal Server Error"});}
+    else {
+      games.find(req.params.gid, function(err, game) {
+
+      });
+    }
+  }*/
 });
 
 module.exports = router;

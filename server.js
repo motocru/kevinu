@@ -4,6 +4,7 @@ const next = require('next');
 const bodyParser = require('body-parser');
 
 const api = require('./server/api');
+var uuid = require('uuid');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
@@ -19,13 +20,27 @@ app
       secret: 'SEN.BLUTARSKY',
       resave: false,
       saveUninitialized: true,
-      cookie: {secure: false}
+      cookie: {
+        secure: false,
+        maxAge: 3600000 * 24 * 14
+      }
     }))
 
     server.use('/api', api);
 
     server.get('*', (req, res) => {
-      return handle(req, res);
+      if (!req.session.user) {
+        req.session.regenerate(function(err) {
+          if (err) {console.log(err)}
+          else {
+            req.session.user = {"user": uuid()};
+            req.session.cookie.maxAge = 3600000 * 24 * 14;
+          }
+          return handle(req, res);
+        });
+      } else {
+        return handle(req, res);
+      }
     });
 
     server.listen(3000, err => {
