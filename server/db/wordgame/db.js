@@ -14,11 +14,7 @@ mongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, functi
   db.collection('games').drop(function(err, delOk) {
     if (err) console.error(err);
     if (delOk) console.log('games table successfully dropped');
-    db.collection('targets').drop(function(err2, delOk2) {
-      if (err2) console.error(err2);
-      if (delOk2) console.log('Targets table successfully dropped');
-    });
-  });
-  */
+  });*/
+  
 });
 module.exports = {collection : (name) => db.collection(name)};

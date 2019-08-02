@@ -21,7 +21,9 @@ class grammarguru extends Component {
     fonts: [],
     levels: [],
     modal: false,
-    game: {}
+    game: {
+      colors: {}
+    }
   }
 
   componentDidMount() {
@@ -83,13 +85,9 @@ class grammarguru extends Component {
   }
 
   showModal = (game) => {
+    console.log(game);
     this.setState({game: game});
     this.toggle();
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault();
-    console.log(e);
   }
 
   toggle = () => {
@@ -169,8 +167,9 @@ class grammarguru extends Component {
                 <GameModal 
                   modal={this.state.modal}
                   toggle={this.toggle}
-                  onSubmit={this.onSubmit}
                   showModal={this.showModal}
+                  onChange={this.onChange}
+                  game={this.state.game}
                 />
                 <button className="btn btn-primary float-right" onClick={this.newGame}><strong>New Game</strong></button>
               </div>
@@ -188,7 +187,9 @@ class grammarguru extends Component {
               </tr>
             </thead>
             <tbody>
-              <Games games={this.state.games} />
+              <Games games={this.state.games} 
+              showModal={this.showModal}
+              />
             </tbody>
             
           </table>

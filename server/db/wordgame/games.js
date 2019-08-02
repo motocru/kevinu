@@ -11,7 +11,8 @@ function Game(userId, colors, font, level, word) {
   this.word = word;
   this.view = Array(word.length).join('_');
   this.remaining = level.rounds;
-  this.status = 'Unfinished'
+  this.status = 'Unfinished',
+  this.guesses = "";
 }
 
 /**creates a new game based off of the given input, writes the game to the 
