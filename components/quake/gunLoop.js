@@ -49,8 +49,8 @@ const weapons = [
 
 class gunLoop extends Component {
   render() {
-   return weapons.map(wep => (
-     <div>
+   return weapons.map((wep, key) => (
+     <div key={key}>
        <img className="qGuns" src={wep.path} alt={wep.key} onClick={() => this.props.setGun(wep.key)}/>
        <style jsx>{`
       .qGuns {

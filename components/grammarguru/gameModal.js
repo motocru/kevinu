@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill(); //do I even need this?
 
 class gameModal extends Component {

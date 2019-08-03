@@ -1,6 +1,5 @@
 //functional library imports
 import React, { Component } from 'react';
-import Head from 'next/head';
 import Layout from '../../components/layout';
 import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill(); //do I even need this?
@@ -51,6 +50,7 @@ class grammarguru extends Component {
       this.setState({textcolor: data.defaults.colors.text, bodycolor: data.defaults.colors.body, 
         guesscolor: data.defaults.colors.guess, fonts: data.fonts, levels: data.levels, font: data.defaults.font.family,
         level: data.defaults.level.name});
+      /**populates the head with the included custom fonts */
       if (document.head.getElementsByClassName("gFont")[0] !== undefined) return;
       else {
         data.fonts.forEach(element => {
@@ -94,13 +94,11 @@ class grammarguru extends Component {
   }
 
   showModal = (game) => {
-    console.log(game);
     this.setState({game: game});
     this.toggle();
   }
 
   guessLetter = (letter) => {
-    console.log(letter);
     fetch(`http://localhost:3000/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
         method: 'put'
     })
@@ -126,6 +124,7 @@ class grammarguru extends Component {
               <div className="font col-sm-3">
                 <strong style={{color: "#fff"}}>Font: </strong>
                 <select className="custom-select custome-select-sm pointers" name="font" value={this.state.font} onChange={this.onChange}>
+                  {/**populates the font option selector */}
                   {this.state.fonts.map((font, key) => (
                     <option key={key} value={font.family}>{font.family}</option>
                   ))}
@@ -177,6 +176,7 @@ class grammarguru extends Component {
               <div className="difficulty col-sm-2">
                 <strong style={{color: "#fff"}}>Level: </strong>
                 <select className="custom-select custome-select-sm pointers" name="level" value={this.state.level} onChange={this.onChange}>
+                  {/**populates the level option selector */}
                   {this.state.levels.map((level, key) => (
                     <option key={key} value={level.name}>{level.name}</option>
                   ))}
@@ -184,6 +184,7 @@ class grammarguru extends Component {
               </div>
               {/**This div is for the New Game Button */}
               <div className="new-game col-sm-2">
+                {/**game Modal is the pop-up window for our game when making guesses and viewing at a closer level */}
                 <GameModal 
                   modal={this.state.modal}
                   toggle={this.toggle}
@@ -209,11 +210,12 @@ class grammarguru extends Component {
               </tr>
             </thead>
             <tbody>
+              {/**Games loops over the games in the current state array and then 
+              populates the table */}
               <Games games={this.state.games} 
               showModal={this.showModal}
               />
             </tbody>
-            
           </table>
         </div>
         

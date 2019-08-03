@@ -1,7 +1,7 @@
 const db = require('./db');
 var mongo = require('mongodb');
 
-/**this file serves as a model for the grammarguru games */
+/**this function serves as a model for the grammarguru game objects */
 function Game(userId, colors, font, level, word) {
   this.userId = userId;
   this.colors = colors;

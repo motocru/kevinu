@@ -2,7 +2,6 @@
 const express = require('express');
 const fs = require('fs');
 var router = express.Router();
-const fetch = require('isomorphic-fetch');
 
 const Metadata = require('../db/wordgame/metadata.json');
 
@@ -16,6 +15,7 @@ fs.readFile(require('path').resolve(__dirname, '../db/wordgame/wordlist.txt'), f
 });
 
 /**=====================ASSISTING FUNCTIONS=========================== */
+/**selects a word from the dictionary file within the specific max and min lengths */
 function wordPick(minLength, maxLength) {
   function getInt() {
     return Math.floor(Math.random() * Math.floor(wordlist.length));
@@ -27,23 +27,23 @@ function wordPick(minLength, maxLength) {
   return pick;
 }
 
+/**replaces a character at a specific location inside of a string */
 String.prototype.setCharAt = function(index, chr) {
   if (index > this.length) return this.toString();
   return this.substring(0, index) + chr + this.substring(index+1);
 }
 
 /**======================API ENDPOINTS=============================== */
-router.get('/test', function(req, res, next) {
-  res.status(200).json({'msg': 'we got here boss'});
-});
-
+/**returns the meta file, or a specific part of the meta if specified with
+ * a query string
+ */
 router.get('/meta', function(req, res, next) {
   var meta = (req.query.parameter === undefined) ? Metadata : Metadata[req.query.parameter];
   if (meta === undefined) {res.status(400).json({"msg": "invalid metadata parameter"});}
   else {res.status(200).json(meta);}
 });
 
-/** */
+/**returns the list of all games associated with a userID */
 router.get('/:user', function(req, res, next) {
   games.findByOwner(req.params.user, function(err, games) {
     if (err) {console.error(err); res.status(500).json([]);}
