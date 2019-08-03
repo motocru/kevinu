@@ -34,7 +34,6 @@ app
           if (err) {console.log(err)}
           else {
             req.session.user = {"user": uuid()};
-            req.session.cookie.maxAge = 3600000 * 24 * 14;
           }
           return handle(req, res);
         });

@@ -1,6 +1,5 @@
-//const Game = require('./gameModel');
-const targets = require('./targets');
 const db = require('./db');
+var mongo = require('mongodb');
 
 /**this file serves as a model for the grammarguru games */
 function Game(userId, colors, font, level, word) {
@@ -9,7 +8,7 @@ function Game(userId, colors, font, level, word) {
   this.font = font;
   this.level = level.name;
   this.word = word;
-  this.view = Array(word.length).join('_');
+  this.view = Array(word.length+1).join('_');
   this.remaining = level.rounds;
   this.status = 'Unfinished',
   this.guesses = "";
@@ -29,7 +28,7 @@ module.exports.create = create;
 
 /**finds a single game by its game id value */
 function find(gid, cb) {
-  db.collection('games').findOne({'_id': gid}, function(err, game) {
+  db.collection('games').findOne({'_id': new mongo.ObjectID(gid)}, function(err, game) {
     if (err) console.error(err);
     cb(err, game);
   });
@@ -48,10 +47,16 @@ function findByOwner(userId, cb) {
 module.exports.findByOwner = findByOwner;
 
 /**updates the values of the current game whenever a single guess is made */
-function updateGame(gid, newGame, done, cb) {
-  /**nothing here for now. I want to try and re-work this function
-   * rather than have a whole new game getting created each time
-   * a single letter is guessed
-   */
+function updateGame(gid, newGame, cb) {
+  var myQuery = {userId: newGame.userId, '_id': new mongo.ObjectID(gid)};
+  var newValues = {
+    remaining: newGame.remaining,
+    view: newGame.view,
+    status: newGame.status,
+    guesses: newGame.guesses
+  }
+  db.collection('games').updateOne(myQuery, {$set: newValues}, function(err, res) {
+    find(gid, cb);
+  });
 }
 module.exports.updateGame = updateGame;

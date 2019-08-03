@@ -1,5 +1,6 @@
 //functional library imports
 import React, { Component } from 'react';
+import Head from 'next/head';
 import Layout from '../../components/layout';
 import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill(); //do I even need this?
@@ -50,6 +51,16 @@ class grammarguru extends Component {
       this.setState({textcolor: data.defaults.colors.text, bodycolor: data.defaults.colors.body, 
         guesscolor: data.defaults.colors.guess, fonts: data.fonts, levels: data.levels, font: data.defaults.font.family,
         level: data.defaults.level.name});
+      if (document.head.getElementsByClassName("gFont")[0] !== undefined) return;
+      else {
+        data.fonts.forEach(element => {
+          var link = document.createElement("LINK");
+          link.href = element.url;
+          link.rel = "stylesheet";
+          link.className = "gFont";
+          document.head.appendChild(link);
+        });
+      }
     });
   }
 
@@ -61,7 +72,6 @@ class grammarguru extends Component {
     .then(res => res.json())
     .then(data => {
       this.setState({games: data});
-      console.log(data);
     });
   }
 
@@ -79,7 +89,6 @@ class grammarguru extends Component {
     .then(data => {
       this.setState({game: data});
       this.populateUserGames(this.state.player);
-      console.log(data);
     });
     this.toggle();
   }
@@ -90,7 +99,18 @@ class grammarguru extends Component {
     this.toggle();
   }
 
+  guessLetter = (letter) => {
+    console.log(letter);
+    fetch(`http://localhost:3000/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
+        method: 'put'
+    })
+    .catch(err => {console.error(err);})
+    .then(res => res.json())
+    .then(data => {console.log(data); this.setState({game: data})});
+  }
+
   toggle = () => {
+    this.populateUserGames(this.state.player);
     this.setState({modal: !this.state.modal});
   }
 
@@ -170,6 +190,8 @@ class grammarguru extends Component {
                   showModal={this.showModal}
                   onChange={this.onChange}
                   game={this.state.game}
+                  guessLetter={this.guessLetter}
+                  player={this.state.player}
                 />
                 <button className="btn btn-primary float-right" onClick={this.newGame}><strong>New Game</strong></button>
               </div>

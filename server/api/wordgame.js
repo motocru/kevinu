@@ -8,7 +8,6 @@ const Metadata = require('../db/wordgame/metadata.json');
 
 /**database requires */
 const games = require('../db/wordgame/games');
-const targets = require('../db/wordgame/targets');
 
 /**read from the wordlist then populate the object */
 var wordlist = {};
@@ -26,6 +25,11 @@ function wordPick(minLength, maxLength) {
     pick = wordlist[getInt()];
   }
   return pick;
+}
+
+String.prototype.setCharAt = function(index, chr) {
+  if (index > this.length) return this.toString();
+  return this.substring(0, index) + chr + this.substring(index+1);
 }
 
 /**======================API ENDPOINTS=============================== */
@@ -81,23 +85,33 @@ router.get('/:user/:gid', function(req, res, next) {
 });
 
 /**handles a guess of a single letter toward the selected word */
-router.post('/:user/:gid/guess', function(req, res, next) {
-  fetch(`https://localhost:3000/api/wordgame/${req.params.user}/${req.params.gid}`, {
-    method: 'get'
-  })
-  .catch(err => {console.error(err); return;})
-  .then(res => res.json())
-  .then(data => {console.log(data);});
-  /*if (req.session.user.user !== req.params.user) {
+router.put('/:user/:gid/guess', function(req, res, next) {
+  if (req.session.user.user !== req.params.user) {
     res.status(401).json({"msg": "Unauthorized"});
   } else {
-    if (err) {res.status(500).json({"msg": "Internal Server Error"});}
-    else {
-      games.find(req.params.gid, function(err, game) {
-
+    if (req.query.letter === "") {res.status(400).json({"msg": "a letter is required to guess"}); return;}
+    games.find(req.params.gid, function(err, game) {
+      if (err) {res.status(500).json({"msg": "INTERNAL SERVER ERROR"}); return;}
+      if (game.remaining <= 0) {res.status(400).json({"msg": "you cannot guess more than the limit"}); return;}
+      var guess = req.query.letter.toLowerCase();
+      game.guesses += guess;
+      if (game.word.includes(guess)) {
+        for (var i = 0; i < game.word.length; i++) {
+          if (game.word[i] === guess) {game.view = game.view.setCharAt(i, guess);}
+        }
+      } else {
+        game.remaining--;
+      }
+      if (!game.view.includes('_') || game.remaining === 0) {
+        game.status = (!game.view.includes('_')) ? 'Victory' : 'Loss';
+      }
+      games.updateGame(req.params.gid, game, function(err2, result) {
+        if (err2) {res.status(500).json({"msg": "INTERNAL SERVER ERROR"}); return;}
+        if (result.status === "Unfinished") {delete result.word};
+        res.status(200).json(result);
       });
-    }
-  }*/
+    });
+  }
 });
 
 module.exports = router;
