@@ -10,10 +10,18 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({dev});
 const handle = app.getRequestHandler();
 
+let allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', "GET,POST,PUT,DELETE,OPTIONS");
+  res.header('Access-Control-Allow-Headers', "*");
+  next();
+}
+
 app
   .prepare()
   .then(() => {
     const server = express();
+    server.use(allowCrossDomain);
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({ extended: false }));
     server.use(session({
