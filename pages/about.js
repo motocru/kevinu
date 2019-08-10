@@ -24,6 +24,10 @@ const About = () => (
             snowboarding and competing in video game tournaments (Quake Champions mostly.)
           </p>
         </div>
+        <div className="form-inline">
+          <img src="../static/HS1.jpg" className="pic rounded-circle"/>
+          <img src="../static/HS2.jpg" className="pic rounded-circle ml-auto"/>
+        </div>
       </div>
       <div>
         {/**This section goes over the purpose of the website */}
@@ -58,6 +62,12 @@ const About = () => (
         border-top: 1px solid #ccc;
         margin: 1em 0;
         padding: 0;
+      }
+
+      .pic {
+        width: 25%;
+        height: 25%;
+        padding: 10px;
       }
     `}
     </style>

@@ -119,7 +119,7 @@ class quake extends Component {
             {basePlayerInfo} {/**Our conditional rendering componenet from above */}
             <hr />
             <div className="row">
-              <div id="wepDiv" className="col-sm-5">
+              <div id="wepDiv" className="col-sm-5 form-inline">
                 <h2>Select Your Weapon</h2>
                 {/**gun loop contains a loop that prints out the images for each
                 of the available guns for quake champions. */}

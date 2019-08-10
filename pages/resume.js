@@ -33,7 +33,7 @@ const Resume = () => (
       <div>
         <h4><strong><u>Skills:</u></strong></h4>
         <p><strong>Web Development: </strong>ASP.NET, Bootstrap, CSS, HTML, MySQL, NodeJS, Express, Spring</p>
-        <p><strong>Programming: </strong>Java, C, C#, Haskell, Scala, Javascript</p>
+        <p><strong>Programming: </strong>Java, C, C#, Javascript</p>
       </div>
       <div>
         <h4><strong><u>Projects:</u></strong></h4>
@@ -47,7 +47,7 @@ const Resume = () => (
         <ul>
           <li>List of different languages this was written in includes: Java, C# and Scala</li>
           <li>Recursion loops and simple division and modulus formulas were used to categorize
-            how lasrge a given number was.
+            how large a given number was.
           </li>
         </ul>
         <p><strong>Grammar Guru:</strong> A game of hangman written in Javascript developed using
@@ -57,7 +57,6 @@ const Resume = () => (
           <li>Players were able to create and play multiple games without losing progress on any games they
             had started prior
           </li>
-          <li>Hosted on a Eucalyptus server instance </li>
         </ul>
       </div>
       <div>
@@ -83,7 +82,7 @@ const Resume = () => (
         </div>
       </div>
       <hr/>
-      <h5>A .PDF version of my Resume can be found here: <a href="#">Fill in with updated Resume</a></h5>
+      <h5>A .PDF version of my Resume can be found here: <a href="../static/Resume082019.pdf" target="_blank">PDF</a></h5>
     </div>
     <style jsx>{`
       hr {
