@@ -30,7 +30,7 @@ class grammarguru extends Component {
     /**sets/gets the player id based upon the session variable
      * then populates the table with all games associated with the user
      */
-    fetch('http://localhost:3000/api/authentication/user', {
+    fetch('https://localhost:3000/api/authentication/user', {
       method: 'post'
     })
     .catch(err => {this.setState({player: ''}); console.error(err); return;})
@@ -41,7 +41,7 @@ class grammarguru extends Component {
     });
 
     /**Sets all the metadata values */
-    fetch('http://localhost:3000/api/wordgame/meta', {
+    fetch('https://localhost:3000/api/wordgame/meta', {
       method: 'get'
     })
     .catch(err => {console.error(err); return;})
@@ -65,7 +65,7 @@ class grammarguru extends Component {
   }
 
   populateUserGames = (user) => {
-    fetch(`http://localhost:3000/api/wordgame/${user}`, {
+    fetch(`https://localhost:3000/api/wordgame/${user}`, {
       method: 'get'
     })
     .catch(err => {this.setState({games: []}); console.error(err); return;})
@@ -79,7 +79,7 @@ class grammarguru extends Component {
     var colors = {textcolor: this.state.textcolor, 
       bodycolor: this.state.bodycolor, guesscolor: this.state.guesscolor};
     var body = { font: this.state.font, colors: colors};
-    fetch(`http://localhost:3000/api/wordgame/${this.state.player}?level=${this.state.level}`, {
+    fetch(`https://localhost:3000/api/wordgame/${this.state.player}?level=${this.state.level}`, {
       method: 'post',
       body: JSON.stringify(body),
       headers: {'Content-Type': 'application/json'}
@@ -99,7 +99,7 @@ class grammarguru extends Component {
   }
 
   guessLetter = (letter) => {
-    fetch(`http://localhost:3000/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
+    fetch(`https://localhost:3000/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
         method: 'put'
     })
     .catch(err => {console.error(err);})
