@@ -9,7 +9,7 @@ import Games from '../../components/grammarguru/games';
 import GameModal from '../../components/grammarguru/gameModal';
 
 const dev = process.env.NODE_ENV !== 'production';
-const host = (dev) ? 'localhost:3001' : 'kevin-u.com';
+const host = (dev) ? 'http://localhost:3001' : 'https://kevin-u.com';
 class grammarguru extends Component {
 
   state = {
@@ -32,7 +32,7 @@ class grammarguru extends Component {
     /**sets/gets the player id based upon the session variable
      * then populates the table with all games associated with the user
      */
-    fetch(`http://${host}/api/authentication/user`, {
+    fetch(`${host}/api/authentication/user`, {
       method: 'post',
       credentials: 'include',
       headers: {
@@ -50,7 +50,7 @@ class grammarguru extends Component {
 
   /**populates the table with games associated with the current user */
   populateUserGames = (user) => {
-    fetch(`http://${host}/api/wordgame/${user}`, {
+    fetch(`${host}/api/wordgame/${user}`, {
       method: 'get',
       credentials: 'include',
       headers: {
@@ -66,7 +66,7 @@ class grammarguru extends Component {
 
   /**populates the meta fields inside of the game */
   populateMeta = () => {
-    fetch(`http://${host}/api/wordgame/meta`, {
+    fetch(`${host}/api/wordgame/meta`, {
       method: 'get',
       credentials: 'include',
       headers: {
@@ -98,7 +98,7 @@ class grammarguru extends Component {
     var colors = {textcolor: this.state.textcolor, 
       bodycolor: this.state.bodycolor, guesscolor: this.state.guesscolor};
     var body = { font: this.state.font, colors: colors};
-    fetch(`http://${host}/api/wordgame/${this.state.player}?level=${this.state.level}`, {
+    fetch(`${host}/api/wordgame/${this.state.player}?level=${this.state.level}`, {
       method: 'post',
       credentials: 'include',
       body: JSON.stringify(body),
@@ -122,7 +122,7 @@ class grammarguru extends Component {
   }
 
   guessLetter = (letter) => {
-    fetch(`http://${host}/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
+    fetch(`${host}/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
         method: 'put',
         credentials: 'include',
         headers: {
