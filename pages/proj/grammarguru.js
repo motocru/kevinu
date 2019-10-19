@@ -8,6 +8,8 @@ require('es6-promise').polyfill(); //do I even need this?
 import Games from '../../components/grammarguru/games';
 import GameModal from '../../components/grammarguru/gameModal';
 
+const dev = process.env.NODE_ENV !== 'production';
+const host = (dev) ? 'localhost:3001' : 'kevin-u.com';
 class grammarguru extends Component {
 
   state = {
@@ -30,10 +32,11 @@ class grammarguru extends Component {
     /**sets/gets the player id based upon the session variable
      * then populates the table with all games associated with the user
      */
-    fetch('http://localhost:3000/api/authentication/user', {
+    fetch(`http://${host}/api/authentication/user`, {
       method: 'post',
+      credentials: 'include',
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
       }
     })
     .catch(err => {this.setState({player: ''}); console.error(err); return;})
@@ -41,11 +44,31 @@ class grammarguru extends Component {
     .then(data => {
       this.setState({player: data.user});
       this.populateUserGames(this.state.player);
+      this.populateMeta();
     });
+  }
 
-    /**Sets all the metadata values */
-    fetch('http://localhost:3000/api/wordgame/meta', {
+  /**populates the table with games associated with the current user */
+  populateUserGames = (user) => {
+    fetch(`http://${host}/api/wordgame/${user}`, {
       method: 'get',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .catch(err => {this.setState({games: []}); console.error(err); return;})
+    .then(res => res.json())
+    .then(data => {
+      this.setState({games: data});
+    });
+  }
+
+  /**populates the meta fields inside of the game */
+  populateMeta = () => {
+    fetch(`http://${host}/api/wordgame/meta`, {
+      method: 'get',
+      credentials: 'include',
       headers: {
         'Accept': 'application/json'
       }
@@ -70,26 +93,14 @@ class grammarguru extends Component {
     });
   }
 
-  populateUserGames = (user) => {
-    fetch(`http://localhost:3000/api/wordgame/${user}`, {
-      method: 'get',
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .catch(err => {this.setState({games: []}); console.error(err); return;})
-    .then(res => res.json())
-    .then(data => {
-      this.setState({games: data});
-    });
-  }
-
+  /**Creates a new game based upon the values that are currently set on the game bar */
   newGame = () => {
     var colors = {textcolor: this.state.textcolor, 
       bodycolor: this.state.bodycolor, guesscolor: this.state.guesscolor};
     var body = { font: this.state.font, colors: colors};
-    fetch(`http://localhost:3000/api/wordgame/${this.state.player}?level=${this.state.level}`, {
+    fetch(`http://${host}/api/wordgame/${this.state.player}?level=${this.state.level}`, {
       method: 'post',
+      credentials: 'include',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
@@ -111,15 +122,16 @@ class grammarguru extends Component {
   }
 
   guessLetter = (letter) => {
-    fetch(`http://localhost:3000/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
+    fetch(`http://${host}/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
         method: 'put',
+        credentials: 'include',
         headers: {
           'Accept': 'application/json'
         }
     })
     .catch(err => {console.error(err);})
     .then(res => res.json())
-    .then(data => {console.log(data); this.setState({game: data})});
+    .then(data => {this.setState({game: data})});
   }
 
   toggle = () => {
@@ -259,4 +271,5 @@ class grammarguru extends Component {
     );
   }
 }
+
 export default grammarguru;

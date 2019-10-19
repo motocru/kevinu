@@ -4,7 +4,8 @@ var db;
 
 mongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, function(err , database) {
   assert.equal(null, err);
-  console.log('database connection made');
+  if (err) throw err;
+  else console.log('connection with database server successful');
 
   db = database.db('kevinu');
   /**below is code to drop the tables from the database so I can just uncomment this

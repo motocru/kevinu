@@ -84,9 +84,11 @@ router.get('/:user/:gid', function(req, res, next) {
   }
 });
 
-/**handles a guess of a single letter toward the selected word */
+/**handles a guess of a single letter toward the selected word and returns the 
+ * updated word object after guess
+ */
 router.put('/:user/:gid/guess', function(req, res, next) {
-  if (req.session.user.user !== req.params.user) {
+  if (!req.session.user || req.session.user.user !== req.params.user) {
     res.status(401).json({"msg": "Unauthorized"});
   } else {
     if (req.query.letter === "") {res.status(400).json({"msg": "a letter is required to guess"}); return;}

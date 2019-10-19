@@ -4,14 +4,17 @@
   "description": "repository for my personal website",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "set NODE_ENV=development && next",
     "build": "next build",
-    "start": "next start"
+    "start": "set NODE_ENV=production && next start"
   },
   "author": "Kevin J. Urban",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
@@ -19,6 +22,7 @@
     "fs": "0.0.1-security",
     "image-webpack-loader": "^5.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "isomorphic-unfetch": "^3.0.0",
     "mongodb": "^3.2.7",
     "next": "^9.0.0",
     "node-fetch": "^2.6.0",
