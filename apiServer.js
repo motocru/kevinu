@@ -7,7 +7,7 @@ const auth = require('./auth.json');
 const api = require('./server/api');
 //console.log(process.env.NODE_ENV);
 const dev = process.env.NODE_ENV !== 'production';
-const host = (dev) ? 'http://localhost:3000' : 'kevin-u.com';
+const host = (dev) ? 'http://localhost:3000' : 'https://www.kevin-u.com';
 
 const server = express();
 
