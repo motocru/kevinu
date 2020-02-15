@@ -21,6 +21,35 @@ export default () => (
                font-family: "IBM Plex Sans", Verdana, Geneva, Tahoma, sans-serif;
            }
 
+           .container {
+               padding-right: 15px;
+               padding-left: 15px;
+               margin-right: auto;
+               margin-left: auto;
+           }
+
+           .centered {
+               text-align: center;
+           }
+
+           @media (min-width: 768px) {
+            .container {
+              width: 750px;
+            }
+          }
+
+          @media (min-width: 992px) {
+            .container {
+              width: 970px;
+            }
+          }
+
+          @media (min-width: 1200px) {
+            .container {
+              width: 1170px;
+            }
+          }
+
            a {
                text-decoration: none;
                color: #3399ff;
@@ -30,7 +59,15 @@ export default () => (
                color: var(--greenapple);
                cursor: pointer;
            }
-
+           
+           hr {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin: 1em 0;
+            padding: 0;
+          }
        `}</style>
    </div>
 );

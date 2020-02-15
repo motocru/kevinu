@@ -61,7 +61,7 @@ class stats extends Component {
     const gunStats = this.loopChampionsAndGrabStats(this.gunJsonName(this.props.gun), this.props.player);
     
     return(
-      <div>
+      <div className="centered">
         <h3>Current Weapon:<br />{this.props.gun}</h3><br />
         <h4>Accuracy: {gunStats.accuracy}%</h4>
         <h4>Kills: {gunStats.kills}</h4>

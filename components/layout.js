@@ -13,7 +13,7 @@ const Layout = (props) => (
     </Head>
     <Meta />
     <Navbar/>
-    <div style={{marginTop: '20px', marginLeft: '100px', marginRight: '100px'}}>
+    <div className="container">
       {props.children}
     </div>
   </div> 

@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Projects = () => (
   <Layout>
     <Head>
-      <title>Kevinu.com - Projects</title>
+      <title>Kevin-u.com - Projects</title>
     </Head>
     <div>
       <h1>Projects page</h1>
@@ -82,18 +82,6 @@ const Projects = () => (
       ul {
         list-style-position: inside;
         margin-left: 20px;
-      }
-
-      hr {
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 1px solid #ccc;
-        margin: 1em 0;
-        padding: 0;
-      }
-      .centered {
-        text-align: center;
       }
     `}
     </style>
