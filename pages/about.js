@@ -8,7 +8,7 @@ const About = () => (
     </Head>
     <div>
       <h1>About me</h1>
-      <h5><i>Some basic information about myself</i></h5>
+      <h4><i>Some basic information about myself</i></h4>
       <hr />
       <div>
         {/**This section goes over a bit about myself */}
@@ -24,9 +24,9 @@ const About = () => (
             snowboarding and competing in video game tournaments (Quake Champions mostly.)
           </p>
         </div>
-        <div className="form-inline">
-          <img src="../static/HS1.jpg" className="pic rounded-circle"/>
-          <img src="../static/HS2.jpg" className="pic rounded-circle ml-auto"/>
+        <div style={{height: '100%'}}>
+          <img src="../static/HS1.jpg" className="pic" />
+          <img src="../static/HS2.jpg" className="pic" style={{float: 'right', marginTop: '20px'}}/>
         </div>
       </div>
       <div>
@@ -55,6 +55,11 @@ const About = () => (
     </div>
 
     <style jsx>{`
+      div {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
       hr {
         display: block;
         height: 1px;
@@ -67,7 +72,8 @@ const About = () => (
       .pic {
         width: 25%;
         height: 25%;
-        padding: 10px;
+        margin: 10px;
+        border-radius: 30px;
       }
     `}
     </style>

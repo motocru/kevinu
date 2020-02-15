@@ -9,7 +9,18 @@ class Games extends Component {
           <GameItem key={game._id}
           game={game}
           />
-        </tr>
+          <style jsx>{`
+            tr {
+              margin: 10px;
+              border-bottom: 1px solid #ddd;
+            }
+
+            tr:hover {
+              background-color: #D3D3D3;
+              cursor: pointer;
+            }
+          `}</style>
+        </tr>  
     ))
   }
 }

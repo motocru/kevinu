@@ -22,8 +22,9 @@ class grammarguru extends Component {
     games: [],
     fonts: [],
     levels: [],
-    modal: false,
+    isShowing: false,
     game: {
+      guesses: '',
       colors: {}
     }
   }
@@ -121,6 +122,7 @@ class grammarguru extends Component {
     this.toggle();
   }
 
+  /**Sends a letter to the server to check if it's present in the word or not */
   guessLetter = (letter) => {
     fetch(`${host}/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
         method: 'put',
@@ -134,9 +136,10 @@ class grammarguru extends Component {
     .then(data => {this.setState({game: data})});
   }
 
+  /**Toggles the game modal on or off */
   toggle = () => {
     this.populateUserGames(this.state.player);
-    this.setState({modal: !this.state.modal});
+    this.setState({isShowing: !this.state.isShowing});
   }
 
   onChange = (e) => {this.setState({[e.target.name]: e.target.value})};
@@ -144,89 +147,59 @@ class grammarguru extends Component {
   render () {
     return(
       <Layout>
+        {this.state.isShowing ? <div onClick={this.toggle} className="back-drop"></div> : null }
         <div>
-          {/**This row covers the overhead game bar */}
-          <div className="row">
-            <div className="card card-body bg-light form-inline">
-              <div className="font col-sm-3">
-                <strong style={{color: "#fff"}}>Font: </strong>
-                <select className="custom-select custome-select-sm pointers" name="font" value={this.state.font} onChange={this.onChange}>
-                  {/**populates the font option selector */}
-                  {this.state.fonts.map((font, key) => (
-                    <option key={key} value={font.family}>{font.family}</option>
-                  ))}
-                </select>
-              </div>
-              {/**Div for all the color selection */}
-              <div className="colors col-sm-5 form-inline">
-                {/**First input group selects our text color used */}
-                <div className="input-group input-group mb-3 color">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text"><strong>Text: </strong></span>
-                  </div>
-                  <input 
-                    type="color" 
-                    className="form-control colorwidth pointers" 
-                    name="textcolor" 
-                    value={this.state.textcolor} 
-                    onChange={this.onChange} 
-                  />
-                </div>
-                {/**Second input group selects our body color used */}
-                <div className="input-group input-group mb-3 color">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text"><strong>Body: </strong></span>
-                  </div>
-                  <input 
-                    type="color" 
-                    className="form-control colorwidth pointers" 
-                    name="bodycolor" 
-                    value={this.state.bodycolor} 
-                    onChange={this.onChange} 
-                  />
-                </div>
-                {/**Thirs input group selects our guess color used */}
-                <div className="input-group input-group mb-3 color">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text"><strong>Guess: </strong></span>
-                  </div>
-                  <input 
-                    type="color" 
-                    className="form-control colorwidth pointers" 
-                    name="guesscolor" 
-                    value={this.state.guesscolor} 
-                    onChange={this.onChange} 
-                  />
-                </div>
-              </div>
-              {/**This selects our level of difficulty */}
-              <div className="difficulty col-sm-2">
-                <strong style={{color: "#fff"}}>Level: </strong>
-                <select className="custom-select custome-select-sm pointers" name="level" value={this.state.level} onChange={this.onChange}>
-                  {/**populates the level option selector */}
+          <div className="gameMenu">
+            <div className="form-inline">
+              <p><strong>Font: </strong></p>
+              <select name="font" value={this.state.font} onChange={this.onChange}>
+                {this.state.fonts.map((font, key) => (
+                  <option key={key} value={font.family}>{font.family}</option>
+                ))}
+              </select>
+            </div>
+            <div className="form-inline">
+                <p><strong>Text: </strong></p>
+                <input
+                  type="color"
+                  className="colorwidth pointers"
+                  value={this.state.textcolor} 
+                  onChange={this.onChange} 
+                />
+                <p><strong>Body: </strong></p>
+                <input
+                  type="color" 
+                  className="colorwidth pointers" 
+                  name="bodycolor" 
+                  value={this.state.bodycolor} 
+                  onChange={this.onChange} 
+                />
+                <p><strong>Guess: </strong></p>
+                <input
+                  type="color" 
+                  className="colorwidth pointers" 
+                  name="guesscolor" 
+                  value={this.state.guesscolor} 
+                  onChange={this.onChange}
+                />
+            </div>
+            <div className="form-inline">
+              <p><strong>Level: </strong></p>
+              <select name="level" value={this.state.level} onChange={this.onChange}>
                   {this.state.levels.map((level, key) => (
                     <option key={key} value={level.name}>{level.name}</option>
                   ))}
-                </select>
-              </div>
-              {/**This div is for the New Game Button */}
-              <div className="new-game col-sm-2">
-                {/**game Modal is the pop-up window for our game when making guesses and viewing at a closer level */}
-                <GameModal 
-                  modal={this.state.modal}
-                  toggle={this.toggle}
-                  showModal={this.showModal}
-                  onChange={this.onChange}
-                  game={this.state.game}
-                  guessLetter={this.guessLetter}
-                  player={this.state.player}
-                />
-                <button className="btn btn-primary float-right" onClick={this.newGame}><strong>New Game</strong></button>
-              </div>
+              </select>
             </div>
-          </div><br />
+            <div className="form-inline">
+              <button className="btn" onClick={this.newGame}><strong>New Game</strong></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          {/**This row covers the overhead game bar */}
           {/**This div covers the table header and will host the table row */}
-          <table className="table table-hover">
+          <table className="table">
             <thead>
               <tr>
                 <th>Level</th>
@@ -245,7 +218,15 @@ class grammarguru extends Component {
             </tbody>
           </table>
         </div>
-        
+        <GameModal 
+            show={this.state.isShowing}
+            toggle={this.toggle}
+            showModal={this.showModal}
+            onChange={this.onChange}
+            game={this.state.game}
+            guessLetter={this.guessLetter}
+            player={this.state.player}
+          />
         <style jsx>{`
           .form-inline {
             display: flex;
@@ -261,11 +242,80 @@ class grammarguru extends Component {
 
           .colorwidth {
             width: 60px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 3px;
+            
+          }
+
+          .colorwidth:hover {
+            background-color: #330000;
           }
 
           .pointers {
             cursor: pointer;
           }
+
+          select {
+            padding: 8px 18px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+          }
+
+          table {
+            border-collapse: collapse;
+            width 100%;
+          }
+
+          table, th, td {
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+          }
+
+          th, td {
+            padding: 10px;
+          }
+
+          .btn {
+            background-color: var(--greenapple);
+            color: white;
+            border-radius: 5px;
+            padding: 14px 20px;
+            margin: 8px 0;
+            cursor: pointer;
+            border: none;
+          }
+
+          .btn:hover {
+            background-color: #45a049;
+          }
+
+          .gameMenu {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            align-content: space-evenly;
+            border: 1px solid;
+            border-color: #808080;
+            background-color: #e2e2e2;
+            box-sizing: border-box;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+          }
+
+          .back-drop {
+            background-color: rgba(48, 49, 48, 0.42);
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: all 1.3s;
+            width: 100%;
+         }
         `}</style>
       </Layout>
     );

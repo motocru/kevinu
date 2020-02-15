@@ -4,39 +4,36 @@ import Head from 'next/head';
 const Resume = () => (
   <Layout>
     <Head>
-      <title>Kevinu.com - Resume</title>
+      <title>Kevin-u.com - Resume</title>
     </Head>
     <div>
       <h1>Resume</h1>
-      <h5><i>My official Resume</i></h5>
+      <h4><i>My official Resume</i></h4>
       <hr />
       <div className="centered">
-        <h2><strong>Kevin J. Urban</strong></h2>
-        <h5>3625 41st. St. NW Apt #222, Rochester, MN 55901</h5>
-        <h5>(920) 224-4375 | urban.kevi@gmail.com</h5>
-        <h5>github.com/motocru | kevinu.com | www.linkedin.com/in/kevin-u/</h5>
+        <h1><strong>Kevin J. Urban</strong></h1>
+        <h3>3625 41st. St. NW Apt #222, Rochester, MN 55901</h3>
+        <h3>(920) 224-4375 | urban.kevi@gmail.com</h3>
+        <h3>github.com/motocru | kevinu.com | www.linkedin.com/in/kevin-u/</h3>
       </div>
       <div>
-        <h4><strong>Education:</strong></h4>
+        <h2><strong>Education:</strong></h2>
         <p>University of Wisconsin - Lacrosse: 2014 - 2018<br />
         Major: Computer Science, Minor: Information Systems</p>
-        <br />
       </div>
       <div>
-        <h4><strong>Work Experience:</strong></h4>
-        <p><strong>SQA Tester, Three Rivers Technologies - </strong> Rochester, MN (June 2018 - Present)
-        <ul>
+        <h2><strong>Work Experience:</strong></h2>
+        <p><strong>SQA Tester, Three Rivers Technologies - </strong> Rochester, MN (June 2018 - Present)</p>
+        <ul style={{listStylePosition: 'inside', marginLeft: '20px'}}>
           <li>Extensively tested a variety of application software through both manual and automated means</li>
         </ul>
-        </p>
-        <p><strong>Floor Sander, Stalker Sports Floors - </strong> New London, WI (June 2012 - August 2017)
-        <ul>
+        <p><strong>Floor Sander, Stalker Sports Floors - </strong> New London, WI (June 2012 - August 2017)</p>
+        <ul style={{listStylePosition: 'inside', marginLeft: '20px'}}>
           <li>Extensive travel and team project experience refinishing hardwood floors</li>
         </ul>
-        </p>
       </div>
       <div>
-        <h4><strong>Skills:</strong></h4>
+        <h2><strong>Skills:</strong></h2>
         <p><strong>Full Stack Web Development - </strong>I have created client-side interfaces, backend API's structuring
         databases and maintaining reliable web services. I worked mostly with JavaScript technoligies including NodeJs, Express,
         React.js, Next.js. I have also spent time using industry standard technologies such as C# ASP.NET and Java Spring.<br />
@@ -44,8 +41,8 @@ const Resume = () => (
         in both JavaScript and C#. I have incorporated both Selenium and API testing with the MSTest framework. </p>
       </div>
       <div>
-        <h4><strong>Projects:</strong></h4>
-        <p><strong>Kevinu.com - </strong> A personal website created to host my resume, projects 
+        <h2><strong>Projects:</strong></h2>
+        <p><strong>Kevin-u.com - </strong> A personal website created to host my resume, projects 
         and to practice programming. I chose to create this website using React.js and Next.js 
         as it presented an opportunity to learn new frameworks while accomplishing a goal of 
         maintaining a website. I also learned to use Nginx and use a Linux server to host the site.<br />
@@ -58,34 +55,24 @@ const Resume = () => (
         learning skills in full stack development and has been done using both React.js and Angular frameworks.</p>
       </div>
       <div>
-        <h4><strong>References:</strong></h4>
-        <div className="row">
-          <div className="col-sm-6">
-            <p><strong>Vishal Trivedi - Lead Developer</strong><br />
-            Time Acquainted: 6 Months<br />
-            Phone: (507) 250-2625<br />
-            Email: Trivedi.Vishal@mayo.edu
-            </p>
-          </div>
-          <div className="col-sm-6">
-            Still need a second reference here
-          </div>
+        <h2><strong>References:</strong></h2>
+        <div>
+          <p><strong>Vishal Trivedi - Lead Developer</strong><br />
+          Time Acquainted: 6 Months<br />
+          Phone: (507) 250-2625<br />
+          Email: Trivedi.Vishal@mayo.edu
+          </p><br />
+        
+          Still need a second reference here
         </div>
       </div>
       <hr/>
-      <h5>A .PDF version of my Resume can be found here: <a href="../static/Resume082019.pdf" target="_blank">PDF</a></h5>
+      <h4>A .PDF version of my Resume can be found here: <a href="../static/Resume082019.pdf" target="_blank">PDF</a></h4>
     </div>
     <style jsx>{`
-      hr {
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 1px solid #ccc;
-        margin: 1em 0;
-        padding: 0;
-      }
-      .centered {
-        text-align: center;
+      div {
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
     `}
     </style>

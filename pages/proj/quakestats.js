@@ -101,31 +101,31 @@ class quake extends Component {
 
     return (
       <Layout>
-        <div>
+        <div style={{marginTop: '20px'}}>
           <h1>Quake Champions Stats page</h1><hr />
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <label htmlFor="playerName">Player Name:</label>
+          <form style={{display: 'inline'}} onSubmit={this.onSubmit}>
+            {/**Redesign without the bootstrap can be found here */}
+              <label htmlFor="playerName">Player Name: </label>
               <input type="text" 
-                className="form-control" 
+                className="textField" 
                 name="playerName" 
                 value={this.state.playerName}
-                onChange={this.onChange}/>
-            </div>
+                onChange={this.onChange}
+              /><span style={{marginLeft: '10px'}}></span>
             <button type="submit" className="btn btn-primary">Search</button>
           </form>
           <div className="details"><br />
             <h3>Current Player: {this.state.player.name}</h3><br />
             {basePlayerInfo} {/**Our conditional rendering componenet from above */}
             <hr />
-            <div className="row">
-              <div id="wepDiv" className="col-sm-5 form-inline">
+            <div className="weaponGrid">
+              <div id="wepDiv">
                 <h2>Select Your Weapon</h2>
                 {/**gun loop contains a loop that prints out the images for each
                 of the available guns for quake champions. */}
                 <GunLoop setGun={this.setGun}/>
               </div>
-              <div className="col-sm-7">
+              <div>
                 {/**This componenet actually calculates the stats for each weapon
                     based on the given data */}
                 <Stats gun={this.state.gun} player={this.state.player}/>
@@ -134,17 +134,33 @@ class quake extends Component {
           </div>
         </div>
         <style jsx>{`
-          hr {
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid #ccc;
-            margin: 1em 0;
-            padding: 0;
-          }
           #wepDiv {
-            border-right: 6px solid white;
-            height: 50%;
+            border-right: 6px solid black;
+            height: 100%;
+          }
+
+          .textField {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+          }
+
+          button[type=submit] {
+            background-color: var(--greenapple);
+            color: white;
+            padding: 14px 20px;
+            margin 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+
+          .weaponGrid {
+            display: grid;
+            grid-template-columns: 50% 50%;
           }
         `}</style>
       </Layout>
