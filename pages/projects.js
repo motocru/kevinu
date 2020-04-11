@@ -71,6 +71,19 @@ const Projects = () => (
             Curse Bot</a></li>
           </ul>
         </div>
+        <div>
+          <h4><strong>Diabotical / Quake Live Timer:</strong></h4>
+          <p>This timing application is meant for use in practicing the memorization of item spawn times
+             in the games Diabotical and Quake Live. The timer provides options for tracking times of the
+             two most important items in dueling, mega health and red armor. The Website usable version was
+             programmed using Javascript and the Android version was made using Android Studio and coded in
+             Kotlin programming language.
+          </p>
+          <ul>
+            <li>APK file: <a href="#" target="_blank">To be included</a></li>
+            <li>Website Version: <Link href="/proj/timer"><a>Diabotical / Quake timer</a></Link></li>
+          </ul>
+        </div>
       </div>
     </div>
     <style jsx>{`

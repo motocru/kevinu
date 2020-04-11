@@ -55,7 +55,7 @@ class quake extends Component {
    * the rank name on the other side
    */
   returnRankingSymbol = (num) => {
-    var precursor = '../../static/quake/ranks/';
+    var precursor = '/quake/ranks/';
     if (num <= 774) return `${precursor}Bronze-1.png`;
     else if (num >= 775 && num <= 849) return `${precursor}Bronze-2.png`;
     else if (num >= 850 && num <= 924) return `${precursor}Bronze-3.png`;
@@ -89,12 +89,12 @@ class quake extends Component {
         <h4>
           Duel Rating: {this.state.player.playerRatings.duel.rating}{' '}
           <img src={this.returnRankingSymbol(this.state.player.playerRatings.duel.rating)} />{' '}
-          ({this.returnRankingSymbol(this.state.player.playerRatings.duel.rating).replace(/(\.+|\/+|static|quake|ranks|png)/gi, '')})
+          ({this.returnRankingSymbol(this.state.player.playerRatings.duel.rating).replace(/(\.+|\/+|public|quake|ranks|png)/gi, '')})
         </h4>
         <h4>
           2v2 Rating: {this.state.player.playerRatings.tdm.rating}
           <img src={this.returnRankingSymbol(this.state.player.playerRatings.tdm.rating)} />{' '}
-          ({this.returnRankingSymbol(this.state.player.playerRatings.tdm.rating).replace(/(\.+|\/+|static|quake|ranks|png)/gi, '')})
+          ({this.returnRankingSymbol(this.state.player.playerRatings.tdm.rating).replace(/(\.+|\/+|public|quake|ranks|png)/gi, '')})
         </h4>
       </div>);
     } else basePlayerInfo = <div></div>

@@ -73,7 +73,7 @@ router.post('/:user', function(req, res, next) {
  * matches the session ID
  */
 router.get('/:user/:gid', function(req, res, next) {
-  console.log(req.session.user);
+  //console.log(req.session.user);
   if (req.session.user.user !== req.params.user) {
     res.status(401).json({"msg": "Unauthorized"});
   } else {

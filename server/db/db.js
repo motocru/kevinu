@@ -2,7 +2,7 @@ var mongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var db;
 
-mongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true}, function(err , database) {
+mongoClient.connect('mongodb://localhost:27017', {useNewUrlParser: true, useUnifiedTopology: true}, function(err , database) {
   assert.equal(null, err);
   if (err) throw err;
   else console.log('connection with database server successful');

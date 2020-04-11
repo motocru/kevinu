@@ -25,8 +25,8 @@ const About = () => (
           </p>
         </div>
         <div style={{height: '100%'}}>
-          <img src="../static/HS1.jpg" className="pic" />
-          <img src="../static/HS2.jpg" className="pic" style={{float: 'right', marginTop: '20px'}}/>
+          <img src="/HS1.jpg" className="pic" />
+          <img src="/HS2.jpg" className="pic" style={{float: 'right', marginTop: '20px'}}/>
         </div>
       </div>
       <div>

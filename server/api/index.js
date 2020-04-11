@@ -23,6 +23,7 @@ router.all('*', (req, res, next) => {
 
 router.use('/wordgame', require('./wordgame'));
 router.use('/authentication', require('./authentication'));
+router.use('/timer', require('./timer'));
 
 
 module.exports = router;

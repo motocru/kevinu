@@ -3,47 +3,47 @@ import React, { Component } from 'react';
 const weapons = [
   {
     key: 'Gauntlet',
-    path: '../../static/quake/gaunt.png'
+    path: '/quake/gaunt.png'
   }, 
   {
     key: 'Machine Gun',
-    path: "../../static/quake/mg.png"
+    path: "/quake/mg.png"
   },
   {
     key: 'Heavy Machine Gun',
-    path: "../../static/quake/hmg.png"
+    path: "/quake/hmg.png"
   },
   {
     key: 'Shotgun',
-    path: "../../static/quake/sg.png"
+    path: "/quake/sg.png"
   },
   {
     key: 'Super Shotgun',
-    path: "../../static/quake/ssg.png"
+    path: "/quake/ssg.png"
   },
   {
     key: 'Nailgun',
-    path: "../../static/quake/ng.png"
+    path: "/quake/ng.png"
   },
   {
     key: 'Super Nailgiun',
-    path: "../../static/quake/sng.png"
+    path: "/quake/sng.png"
   },
   {
     key: 'Tribolt',
-    path: "../../static/quake/tri.png"
+    path: "/quake/tri.png"
   },
   {
     key: 'Rocket Launcher',
-    path: "../../static/quake/rl.png"
+    path: "/quake/rl.png"
   },
   {
     key: 'Lightning Gun',
-    path: "../../static/quake/lg.png"
+    path: "/quake/lg.png"
   },
   {
     key: 'Railgun',
-    path: "../../static/quake/rail.png"
+    path: "/quake/rail.png"
   }
 ];
 

@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../db');
 var mongo = require('mongodb');
 
 /**this function serves as a model for the grammarguru game objects */
