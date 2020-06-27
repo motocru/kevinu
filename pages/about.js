@@ -15,8 +15,8 @@ const About = () => (
         <h3>Who am I?</h3>
         <div>
           <p>
-            &emsp;My name is is Kevin J. Urban. I'm a 25 year old SQA Tester 
-            working for Three Rivers Technologies, currently living in Rochester, Minnesota
+            &emsp;My name is is Kevin J. Urban. I'm a 26 year old programmer 
+            working for Three Rivers Technologies and currently living in Rochester, Minnesota
             . I'm originally from New London, Wisconsin and graduated from the 
             University of Wisconsin - Lacrosse with a bachelor's degree in computer science.
             I'm an avid programmer who enjoys learning anything new in the tech world whether 

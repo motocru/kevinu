@@ -80,7 +80,6 @@ const Projects = () => (
              Kotlin programming language.
           </p>
           <ul>
-            <li>APK file: <a href="#" target="_blank">To be included</a></li>
             <li>Website Version: <Link href="/proj/timer"><a>Diabotical / Quake timer</a></Link></li>
           </ul>
         </div>

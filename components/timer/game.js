@@ -17,6 +17,7 @@ class Game extends Component {
       this.setState({guess: ""});
    }
 
+   /**function used for recording changes on an element */
    onChange = (e) => {this.setState({[e.target.name]: e.target.value});}
 
    render () {

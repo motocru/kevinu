@@ -8,13 +8,13 @@ const Resume = () => (
     </Head>
     <div>
       <h1>Resume</h1>
-      <h4><i>My official Resume</i></h4>
+      <h4><i>My work Resume</i></h4>
       <hr />
       <div className="centered">
         <h1><strong>Kevin J. Urban</strong></h1>
         <h3>3625 41st. St. NW Apt #222, Rochester, MN 55901</h3>
         <h3>(920) 224-4375 | urban.kevi@gmail.com</h3>
-        <h3>github.com/motocru | kevinu.com | www.linkedin.com/in/kevin-u/</h3>
+        <h3>github.com/motocru | kevin-u.com | www.linkedin.com/in/kevin-u/</h3>
       </div>
       <div>
         <h2><strong>Education:</strong></h2>
@@ -23,9 +23,10 @@ const Resume = () => (
       </div>
       <div>
         <h2><strong>Work Experience:</strong></h2>
-        <p><strong>SQA Tester, Three Rivers Technologies - </strong> Rochester, MN (June 2018 - Present)</p>
+        <p><strong>SQA Tester / C# Developer, Three Rivers Technologies - </strong> Rochester, MN (June 2018 - Present)</p>
         <ul style={{listStylePosition: 'inside', marginLeft: '20px'}}>
           <li>Extensively tested a variety of application software through both manual and automated means</li>
+          <li>Wrote code for automatic billing generation and structured backend API's</li>
         </ul>
         <p><strong>Floor Sander, Stalker Sports Floors - </strong> New London, WI (June 2012 - August 2017)</p>
         <ul style={{listStylePosition: 'inside', marginLeft: '20px'}}>
@@ -46,10 +47,9 @@ const Resume = () => (
         and to practice programming. I chose to create this website using React.js and Next.js 
         as it presented an opportunity to learn new frameworks while accomplishing a goal of 
         maintaining a website. I also learned to use Nginx and use a Linux server to host the site.<br />
-        <strong>Numeral to word converter - </strong> This program takes an integer ranging from 
-        negative one quintillion to one quintillion and prints the English word counterpart. 
-        This project was made for a class and was a great way to learn how useful recursion 
-        can be to perform actions and remove unnecessary repeated code.<br />
+        <strong>Diabotical / Quake Live timer</strong> A tool used to help with item respawn timers
+        in the video games Quake Live and Diabotical. This project was a learning experience in App development using
+        Dart and Flutter as well as a learning experience in API structure for the web application version <br />
         <strong>Grammar Guru - </strong> A game of hangman with varying levels of difficulty 
         and user customization including font choice and color scheme. This project helped with 
         learning skills in full stack development and has been done using both React.js and Angular frameworks.</p>
@@ -58,16 +58,19 @@ const Resume = () => (
         <h2><strong>References:</strong></h2>
         <div>
           <p><strong>Vishal Trivedi - Lead Developer</strong><br />
-          Time Acquainted: 6 Months<br />
+          Time Acquainted: 1 Year<br />
           Phone: (507) 250-2625<br />
           Email: Trivedi.Vishal@mayo.edu
           </p><br />
-        
-          Still need a second reference here
+          <p><strong>Nathan Jones - Developer</strong><br/>
+          Time acquainted: 8 months<br/>
+          Phone: (507) 244-0230<br/>
+          Email: Jones.Nate@mayo.edu
+          </p>
         </div>
       </div>
       <hr/>
-      <h4>A .PDF version of my Resume can be found here: <a href="../static/Resume082019.pdf" target="_blank">PDF</a></h4>
+      <h4>A .PDF version of my Resume can be found here: <a href="/Resume.pdf" target="_blank">PDF</a></h4>
     </div>
     <style jsx>{`
       div {
