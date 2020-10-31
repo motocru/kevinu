@@ -13,7 +13,7 @@ const Layout = (props) => (
     </Head>
     <Meta />
     <Navbar/>
-    <div className="container">
+    <div className="container" style={{paddingTop: '70px'}}>
       {props.children}
     </div>
   </div> 
