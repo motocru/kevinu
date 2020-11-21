@@ -21,7 +21,7 @@ const About = () => (
             University of Wisconsin - Lacrosse with a bachelor's degree in computer science.
             I'm an avid programmer who enjoys learning anything new in the tech world whether 
             it be in the realm of hardware or software. I also enjoy running, lifting weights,
-            snowboarding and competing in video game tournaments (Quake Champions mostly.)
+            snowboarding and competing in video game tournaments (Quake Champions & Diabotical mostly.)
           </p>
         </div>
         <div style={{height: '100%'}}>

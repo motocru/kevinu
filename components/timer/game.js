@@ -67,7 +67,7 @@ class Game extends Component {
                <h2>Results:</h2><br />
                <table className="table">
                   <thead>
-                     <tr>
+                     <tr style={{textAlign: 'center'}}>
                         <th>Item</th>
                         <th>Pickup Time</th>
                         <th>Spawn Time</th>

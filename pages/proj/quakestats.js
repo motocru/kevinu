@@ -105,7 +105,7 @@ class quake extends Component {
           <h1>Quake Champions Stats page</h1><hr />
           <form style={{display: 'inline'}} onSubmit={this.onSubmit}>
             {/**Redesign without the bootstrap can be found here */}
-              <label htmlFor="playerName">Player Name: </label>
+              <label htmlFor="playerName">Player Name: </label><span style={{marginLeft: '5px'}}></span>
               <input type="text" 
                 className="textField" 
                 name="playerName" 
@@ -141,7 +141,7 @@ class quake extends Component {
 
           .textField {
             width: 50%;
-            padding: 12px 20px;
+            padding: 8px 16px;
             margin: 8px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -151,7 +151,7 @@ class quake extends Component {
           button[type=submit] {
             background-color: var(--greenapple);
             color: white;
-            padding: 14px 20px;
+            padding: 10px 16px;
             margin 8px 0;
             border: none;
             border-radius: 4px;

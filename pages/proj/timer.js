@@ -145,7 +145,7 @@ class Timer extends Component {
             </div>
             <style jsx>{`
                input[type=submit] {
-                  background-color: #4CAF50;
+                  background-color: #1f7a1f;
                   border: none;
                   color: white;
                   padding: 16px 32px;
@@ -154,10 +154,6 @@ class Timer extends Component {
                   cursor: pointer;
                   border-radius: 5px;
                   font-weight: bold;
-               }
-
-               input[type=submit]:hover {
-                  background-color: #1f7a1f;
                }
 
                select {
