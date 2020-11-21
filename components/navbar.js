@@ -13,7 +13,7 @@ class Navigation extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarColor">
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
+                            <li className="nav-item">
                                 <Link href="/">
                                     <a className="nav-link">Home
                                         <span className="sr-only">(Current)</span>
