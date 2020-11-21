@@ -14,7 +14,7 @@ class Results extends Component {
                   margin: 10px;
                   border-bottom: 1px solid #ddd;
                   text-align: center;
-                  background-color: ${(result.endTime == result.guessTime) ? "#77ff33" : "#ff1a1a"};
+                  background-color: ${(result.endTime == result.guessTime) ? "#006400" : "#8b0000"};
                }
             `}</style>
          </tr>

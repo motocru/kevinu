@@ -1,12 +1,12 @@
 //functional library imports
 import React, { Component } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Layout from '../../components/layout';
 import fetch from 'isomorphic-fetch';
 require('es6-promise').polyfill(); //do I even need this?
 
 //Component Imports
 import Games from '../../components/grammarguru/games';
-import GameModal from '../../components/grammarguru/gameModal';
 
 const dev = process.env.NODE_ENV !== 'production';
 const host = (dev) ? 'http://localhost:3001' : 'https://kevin-u.com';
@@ -23,6 +23,7 @@ class grammarguru extends Component {
     fonts: [],
     levels: [],
     isShowing: false,
+    guess: '',
     game: {
       guesses: '',
       colors: {}
@@ -122,6 +123,16 @@ class grammarguru extends Component {
     this.toggle();
   }
 
+  onSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.game.guesses.includes(this.state.guess)) {
+        alert('You have already guessed this letter');
+    } else {
+        this.guessLetter(this.state.guess);
+    }
+    this.setState({guess: ""});
+}
+
   /**Sends a letter to the server to check if it's present in the word or not */
   guessLetter = (letter) => {
     fetch(`${host}/api/wordgame/${this.state.player}/${this.state.game._id}/guess?letter=${letter}`, {
@@ -145,61 +156,91 @@ class grammarguru extends Component {
   onChange = (e) => {this.setState({[e.target.name]: e.target.value})};
 
   render () {
+    let guessInputField;
+
+    if (this.state.game.remaining > 0 && this.state.game.status === "Unfinished") {
+        guessInputField = (<form onSubmit={this.onSubmit}>
+            <span style={{color: 'white', marginRight: '3px'}}><strong>Guess:</strong></span>
+            <input type="text" 
+                className="guess" 
+                name="guess" 
+                maxLength="1"
+                value={this.state.guess}
+                onChange={this.onChange}
+                style={{
+                    borderRadius: '4px',
+                    padding: '7px 11px',
+                    margin: '8px 0',
+                    border: '1px solid #ccc',
+                    boxSizing: 'border-box',
+                    marginRight: '3px'
+                }}
+            />
+            <button type="submit"
+                style={{
+                    backgroundColor: '#3333ff',
+                    color: 'white',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    border: 'none',
+                    padding: '8px'
+                }}
+            >Send Guess</button>
+        </form>);
+    } else {
+        guessInputField = (<div><h4>Status: {this.state.game.status}</h4></div>);
+    }
+
     return(
       <Layout>
-        {this.state.isShowing ? <div onClick={this.toggle} className="back-drop"></div> : null }
         <div>
-          <div className="gameMenu">
-            <div className="form-inline">
-              <p><strong>Font: </strong></p>
-              <select name="font" value={this.state.font} onChange={this.onChange}>
-                {this.state.fonts.map((font, key) => (
-                  <option key={key} value={font.family}>{font.family}</option>
-                ))}
-              </select>
-            </div>
-            <div className="form-inline">
-                <p><strong>Text: </strong></p>
-                <input
-                  type="color"
-                  className="colorwidth pointers"
-                  value={this.state.textcolor} 
-                  onChange={this.onChange} 
-                />
-                <p><strong>Body: </strong></p>
-                <input
-                  type="color" 
-                  className="colorwidth pointers" 
-                  name="bodycolor" 
-                  value={this.state.bodycolor} 
-                  onChange={this.onChange} 
-                />
-                <p><strong>Guess: </strong></p>
-                <input
-                  type="color" 
-                  className="colorwidth pointers" 
-                  name="guesscolor" 
-                  value={this.state.guesscolor} 
-                  onChange={this.onChange}
-                />
-            </div>
-            <div className="form-inline">
-              <p><strong>Level: </strong></p>
-              <select name="level" value={this.state.level} onChange={this.onChange}>
-                  {this.state.levels.map((level, key) => (
-                    <option key={key} value={level.name}>{level.name}</option>
-                  ))}
-              </select>
-            </div>
-            <div className="form-inline">
-              <button className="btn" onClick={this.newGame}><strong>New Game</strong></button>
+          <div className="card" style={{marginTop: '15px', marginBottom: '10px'}}>
+            <div className="card-body">
+              <div className="row">
+                {/**Begin font selection div */}
+                <div className="col-sm-3">
+                  <div className="form-group form-inline">
+                    <label htmlFor="font"><strong>Font: </strong></label>
+                    <select className="form-control" id="font" name="font" value={this.state.font} onChange={this.onChange}>
+                      {this.state.fonts.map((font, key) => (
+                        <option key={key} value={font.family}>{font.family}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                {/**begin Color selection div */}
+                <div className="col-sm-4">
+                  <div className="form-inline" style={{marginTop: '7px'}}>
+                    <label htmlFor="textcolor"><strong>Text: </strong></label>
+                    <input type="color" name="textcolor" className="pointers" value={this.state.textcolor} onChange={this.onChange}  style={{marginLeft: '3px', marginRight: '10px'}}/>
+                    <label htmlFor="bodycolor"><strong>Body: </strong></label>
+                    <input type="color" name="bodycolor" className="pointers" value={this.state.bodycolor} onChange={this.onChange} style={{marginLeft: '3px', marginRight: '10px'}}/>
+                    <label htmlFor="guesscolor"><strong>Guess:</strong></label>
+                    <input type="color" name="guesscolor" className="pointers" value={this.state.guesscolor} onChange={this.onChange} style={{marginLeft: '3px'}}/>
+                  </div>
+                </div>
+                {/**Begin level selection div */}
+                <div className="col-sm-3">
+                  <div className="form-group form-inline">
+                    <label htmlFor="level"><strong>Level:</strong></label>
+                    <select className="form-control" name="level" value={this.state.level} onChange={this.onChange}>
+                      {this.state.levels.map((level, key) => (
+                        <option key={key} value={level.name}>{level.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col-sm-2">
+                  <button className="btn btn-primary" onClick={this.newGame}>New Game</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div>
           {/**This row covers the overhead game bar */}
           {/**This div covers the table header and will host the table row */}
-          <table className="table">
+          <table className="table table-hover">
             <thead>
               <tr>
                 <th>Level</th>
@@ -218,79 +259,37 @@ class grammarguru extends Component {
             </tbody>
           </table>
         </div>
-        <GameModal 
-            show={this.state.isShowing}
-            toggle={this.toggle}
-            showModal={this.showModal}
-            onChange={this.onChange}
-            game={this.state.game}
-            guessLetter={this.guessLetter}
-            player={this.state.player}
-          />
+        <Modal isOpen={this.state.isShowing} toggle={this.toggle} className="modal-lg">
+          <ModalHeader>
+            Guesses Remaining: {this.state.game.remaining}
+          </ModalHeader>
+          <ModalBody>
+            {guessInputField}
+            <div className="form-inline" style={{textAlign: 'center'}}>
+                <h3 style={{color: 'white', marginRight: '3px'}}>Current view: </h3>{' '}
+                <h3 className="letters view">{this.state.game.view}</h3>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <h3 style={{marginTop: '3px'}}>Guesses: </h3>{' '}
+            <div style={{float: 'left', marginTop: '6px'}}>
+                {Array.from(this.state.game.guesses).map((guessLettter, key) => (
+                    <h3 key={key} style={{display: 'inline'}} className="letters guess">{guessLettter}</h3>
+                ))}
+            </div>
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
         <style jsx>{`
-          .form-inline {
-            display: flex;
-            flex-flow: row wrap;
-            align-items: center;
-            vertical-align: middle;
-          }
-
-          .color {
-            padding: 5px;
-            margin-top: 17px;
-          }
-
           .colorwidth {
             width: 60px;
             margin-left: 5px;
             margin-right: 5px;
             border-radius: 3px;
-            
-          }
-
-          .colorwidth:hover {
-            background-color: #330000;
           }
 
           .pointers {
             cursor: pointer;
-          }
-
-          select {
-            padding: 8px 18px;
-            margin-left: 5px;
-            border: none;
-            border-radius: 4px;
-            background-color: #f1f1f1;
-            cursor: pointer;
-          }
-
-          table {
-            border-collapse: collapse;
-            width 100%;
-          }
-
-          table, th, td {
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-          }
-
-          th, td {
-            padding: 10px;
-          }
-
-          .btn {
-            background-color: var(--greenapple);
-            color: white;
-            border-radius: 5px;
-            padding: 14px 20px;
-            margin: 8px 0;
-            cursor: pointer;
-            border: none;
-          }
-
-          .btn:hover {
-            background-color: #45a049;
           }
 
           .gameMenu {
@@ -316,6 +315,21 @@ class grammarguru extends Component {
             transition: all 1.3s;
             width: 100%;
          }
+
+         .letters {
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            text-indent: 10px;
+            font-size: 25px;
+            background-color: ${this.state.game.colors.bodycolor};
+            font-family: "${this.state.game.font}";
+          }
+          .view {
+              color: ${this.state.game.colors.textcolor};     
+          }
+          .guess {
+              color: ${this.state.game.colors.guesscolor};
+          }
         `}</style>
       </Layout>
     );

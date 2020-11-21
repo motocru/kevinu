@@ -6,7 +6,7 @@ class Navigation extends Component {
         return(
             <div>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                    <a className="navbar-brand" href="#">Navbar</a>
+                    <a className="navbar-brand" href="#">Kevin-u.com</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle Navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

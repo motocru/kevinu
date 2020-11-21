@@ -1,4 +1,4 @@
-export default () => (
+const Meta = () => (
    <div>
        <style jsx global>{`
            @charset "UTF-8";
@@ -72,3 +72,5 @@ export default () => (
        `}</style>
    </div>
 );
+
+export default Meta;
