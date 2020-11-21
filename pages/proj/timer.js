@@ -156,10 +156,6 @@ class Timer extends Component {
                   font-weight: bold;
                }
 
-               input[type=submit]:hover {
-                  background-color: #1f7a1f;
-               }
-
                select {
                   padding: 8px 18px;
                   margin-left: 5px;
