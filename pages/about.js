@@ -15,9 +15,9 @@ const About = () => (
         <h3>Who am I?</h3>
         <div>
           <p>
-            &emsp;My name is is Kevin J. Urban. I'm a 26 year old programmer 
-            working for Three Rivers Technologies and currently living in Rochester, Minnesota
-            . I'm originally from New London, Wisconsin and graduated from the 
+            &emsp;My name is is Kevin J. Urban. I'm a 27 year old Software Engineer 
+            working for Three Rivers Technologies and currently living in Lacrosse, Wisconsin.
+            I was born in New London, Wisconsin and graduated from the 
             University of Wisconsin - Lacrosse with a bachelor's degree in computer science.
             I'm an avid programmer who enjoys learning anything new in the tech world whether 
             it be in the realm of hardware or software. I also enjoy running, lifting weights,
@@ -36,7 +36,7 @@ const About = () => (
           <p>
             &emsp;The purpose of this website is to have a place to host information about 
             myself as well as having a website to use as a playground of sorts.
-            On this website you can find my Resume and some previous programming projects
+            On this website you can find my Resume and some programming projects
             that I've done. Having everything hosted here also allows me to create more
             projects to further expand my programming knowledge
           </p>

@@ -14,29 +14,29 @@ const Projects = () => (
         <div>
           <h4><strong>Kevinu.com:</strong></h4>
           <p>This is the website you're currently on! This website serves as my little corner of the
-            internet to host my Resume and some programming projects I've done in the past.
+            internet to host my Resume and some programming projects I've done.
             I also use this website as a playground of sorts whenever I want to try tackling
             a new coding project or learning anything new. This website was made using a frontend of
             React, Next.js and Bootstrap 4. The backend is running on Node.js with an Express framework
-            and using MongoDB to store data. The entirety of the code base is hosted on a server droplet
+            and using MongoDB to store data. The entirety of the code base is hosted on a linux server droplet
             through <a href="http://www.digitalocean.com" target="_blank">digitalocean.com</a> 
           </p>
         </div>
         <div>
           <h4><strong>Grammar Guru:</strong></h4>
-          <p>This project was a game of hangman that was coded in Javascript using JQuery and hosted on a Node.js
-            Server using an Express framework and MongoDB for the database. Grammar Guru allowed users
-            to start up multiple different games and pick them back up without losing progress 
-            on any other games they started. Grammar Guru allowed for users to customize their game
-            with multiple color, font and difficulty selections to choose from. The version that is playable
-            on this website has been tweaked to work with the React framework. Other changes including removal
-            of unnecessary code that was a part of the original assignment that inspired this project.
+          <p>A game of hangman that was coded in Javascript using JQuery and hosted on a Node.js
+            Server using an Express framework and MongoDB for the database. Grammar Guru allows users
+            to start up multiple different games and return to them without losing progress 
+            on other games they started. Grammar Guru allows for users to customize their games
+            with multiple color, font, and difficulty selections to choose from. The version that is playable
+            on this website has been tweaked to work with the React framework used on this website.
           </p>
           <ul>
             <li>GitHub page: <a href="https://github.com/motocru/GrammarGuru" target="_blank">Grammar Guru</a></li>
             <li>Playable version: <Link href="/proj/grammarguru"><a>Grammar Guru</a></Link></li>
           </ul>
         </div>
+        {/** 
         <div>
           <h4><strong>Quake Champions Stat Page:</strong></h4>
           <p>This is a stat viewing application for the video game Quake Champions. The application
@@ -54,16 +54,16 @@ const Projects = () => (
             <li>Website Version: <Link href="/proj/quakestats"><a>Quake Champions Stats Page</a></Link></li>
           </ul>
         </div>
+        */}
         <div>
           <h4><strong>Curse Bot:</strong></h4>
           <p>Curse bot is an application that tracks different levels of profanity on Discord servers.
-            The bot identifies differnt curse words through the use of regexes and tracks the total usage
+            The bot identifies different curse words through the use of regexes and tracks the total usage
             for both servers and individual users through the use of a MongoDB database. When numerical milestones
             are reached, the bot will notify the the server and users of those specific milestones. 
             The bot will notify users of different stats such as the total count of curses or how many times
             a specific curse word has been used when prompted with commands.
-            The bot will also respond randomly from a list of pre-generated messages when users try to
-            talk to it.
+            The bot will also respond randomly from a list of pre-generated messages when users send messages to it.
           </p>
           <ul>
             <li>GitHub Page: <a href="https://github.com/motocru/curse-bot" target="_blank">Curse Bot</a></li>
@@ -75,12 +75,10 @@ const Projects = () => (
           <h4><strong>Diabotical / Quake Live Timer:</strong></h4>
           <p>This timing application is meant for use in practicing the memorization of item spawn times
              in the games Diabotical and Quake Live. The timer provides options for tracking times of the
-             two most important items in dueling, mega health and red armor. The Website usable version was
-             programmed using Javascript and the Android version was made using Android Studio and coded in
-             Kotlin programming language.
+             two most important items in dueling, mega health and red armor.
           </p>
           <ul>
-            <li>Website Version: <Link href="/proj/timer"><a>Diabotical / Quake timer</a></Link></li>
+            <li>Playable Version: <Link href="/proj/timer"><a>Diabotical / Quake timer</a></Link></li>
           </ul>
         </div>
       </div>
