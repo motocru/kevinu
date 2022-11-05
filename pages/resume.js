@@ -31,18 +31,19 @@ const Resume = () => (
           <li>Constructed API endpoints for payment transaction history and invoice updates to google cloud firebase storage for accurate record keeping of customer accounts.</li>
           <li>Secured internet-exposed API endpoints using HMAC Authorization, preventing unauthorized access to company data and functionalities.</li>
           <li>Dynamically created billing statements for customers using the iText7 library to create PDFs detailing where and how customer account charges were incurred.</li>
-          <li>Aided in testing of applications where possible to increase rate of application deployment.</li>
+          <li>Developed new features for a mobile app using Google's Dart language and Flutter platform to develop for both Android and iOS</li>
         </ul>
       </div>
       <div>
         <h2><strong>Skills:</strong></h2>
-        <p><strong>Full Stack Web Development - </strong>Created client-side interfaces using ReactJS, Blazor, and NextJS. Constructed backend API’s 
+        <p><strong>Full Stack Web Development - </strong>Created client-side interfaces using ReactJS, Blazor, and NextJS. Constructed backend API's 
         using JavaScript based technologies NodeJS and Express as well as industry-standard tools such as C# .NET. I have structured 
         MongoDB and SQL databases and maintained web services hosted on Linux cloud servers using Nginx.<br />
          <strong>Google Cloud Platform - </strong>Utilized Google Cloud Platform tools such as firestore, cloud scheduler 
          and kubernetes engine to store data, schedule API cron jobs and host application clusters.<br />
         <strong>Automation Testing - </strong>Created automation tests using Selenium in both JavaScript and C#. Incorporated both Selenium UI tests 
-        and API tests in the MSTest framework to automate regression testing processes.</p>
+        and API tests in the MSTest framework to automate regression testing processes.<br />
+        <strong>Phone applications - </strong>Worked on and maintained an iOS and Android application using Flutter and Dart</p>
       </div>
       <div>
         <h2><strong>Projects:</strong></h2>
