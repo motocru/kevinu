@@ -1,2 +1,20 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
+
+@layer base {
+    h1 {
+        @apply text-3xl font-bold;
+    }
+
+    h2 {
+        @apply text-2xl font-bold;
+    }
+
+    h3 {
+        @apply text-xl font-bold;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
