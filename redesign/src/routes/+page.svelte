@@ -36,16 +36,34 @@
 	{/if}
 </section>
 
+<!-- Our main navigation bar. placed here to provide position for sticky -->
 <div class="nav-bar">
 	<Nav />
 </div>
 
-<section id="about" class="section"></section>
+<!-- The about section -->
+<section id="about" class="section">
+	<div class="section-header">
+		<h1 class="text-5xl">About</h1>
+	</div>
+	<div class="split-screen">
+		<div class="pane">
+			<p>
+				A deeply passionate full stack and app developer with whom learning never stops. I have
+				experience in a wide range of technologies and frameworks, and I am always looking for new
+				opportunities to learn and grow. I also have experience with cloud services and deployment.
+				When not coding, I enjoy playing video games, reading books, hiking, snowboarding and
+				spending time with my wife and dog.
+			</p>
+		</div>
+		<div class="pane"></div>
+	</div>
+</section>
 <section id="projects" class="section"></section>
 <section id="resume" class="section"></section>
 <section id="contact" class="section"></section>
 
-<style lang="css">
+<style lang="postcss">
 	.section {
 		height: 100vh;
 		width: 100%;
@@ -86,5 +104,12 @@
 		left: 0;
 		right: 0;
 		z-index: 100;
+		margin-left: -3rem;
+		margin-right: -3rem;
+	}
+
+	.section-header {
+		padding-top: 5rem;
+		padding-left: 5rem;
 	}
 </style>
