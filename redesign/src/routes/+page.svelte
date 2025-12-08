@@ -3,6 +3,19 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Nav from '$lib/components/nav.svelte';
+	import CSharpLogo from '$lib/assets/csharp.png';
+	import CssLogo from '$lib/assets/css-3.svg';
+	import DotNetLogo from '$lib/assets/dotnet-logo.png';
+	import ExpressLogo from '$lib/assets/expressjs.svg';
+	import GraphQLLogo from '$lib/assets/graphQL.png';
+	import MySQLLogo from '$lib/assets/MySQL-Logo.png';
+	import NodejsLogo from '$lib/assets/nodejs-icon.svg';
+	import SvelteLogo from '$lib/assets/svelte.png';
+	import TypeScriptLogo from '$lib/assets/typescript.png';
+	import DartLogo from '$lib/assets/Dart.png';
+	import FlutterLogo from '$lib/assets/flutter.png';
+	import GoogleCloudLogo from '$lib/assets/google-cloud.png';
+	import HtmlLogo from '$lib/assets/html-logo.png';
 
 	let ready = $state(false);
 
@@ -61,7 +74,40 @@
 				</p>
 			</div>
 			<div class="pane">
-				Some lorem ipsum text for all of this to test out the thing that I'm doing here.
+				<div class="tech-container">
+					<div class="tech-column">
+						<img src={CSharpLogo} class="tech-images" alt="C#" />
+						<label for="CSharp">C#</label>
+						<img src={CssLogo} class="tech-images" alt="CSS" />
+						<label for="CSS">CSS</label>
+						<img src={DotNetLogo} class="tech-images" alt=".NET" />
+						<label for=".NET">.NET</label>
+						<img src={ExpressLogo} class="tech-images" alt="Express" />
+						<label for="Express">Express</label>
+					</div>
+					<div class="tech-column">
+						<img src={GraphQLLogo} class="tech-images" alt="GraphQL" />
+						<label for="GraphQL">GraphQL</label>
+						<img src={MySQLLogo} class="tech-images" alt="MySQL" />
+						<label for="MySQL">MySQL</label>
+						<img src={NodejsLogo} class="tech-images" alt="Node.js" />
+						<label for="Node.js">Node.js</label>
+						<img src={SvelteLogo} class="tech-images" alt="Svelte" />
+						<label for="Svelte">Svelte</label>
+						<img src={HtmlLogo} class="tech-images" alt="HTML" />
+						<label for="HTML">HTML</label>
+					</div>
+					<div class="tech-column">
+						<img src={TypeScriptLogo} class="tech-images" alt="TypeScript" />
+						<label for="TypeScript">TypeScript</label>
+						<img src={DartLogo} class="tech-images" alt="Dart" />
+						<label for="Dart">Dart</label>
+						<img src={FlutterLogo} class="tech-images" alt="Flutter" />
+						<label for="Flutter">Flutter</label>
+						<img src={GoogleCloudLogo} class="tech-images" alt="Google Cloud" />
+						<label for="Google Cloud">Google Cloud</label>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -85,11 +131,16 @@
 <style lang="postcss">
 	.section {
 		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		width: 100%;
 	}
 
 	.section-content {
 		justify-content: center;
+		margin-top: auto;
+		margin-bottom: auto;
 	}
 
 	.split-screen {
@@ -135,10 +186,30 @@
 		position: relative;
 		padding-top: 5rem;
 		margin-bottom: 0;
+		top: 0;
 		padding-bottom: 0;
 	}
 
 	.section-header h1 {
 		margin: 0;
+	}
+
+	.tech-images {
+		width: 7rem;
+		padding: 15px;
+		border-radius: 5px;
+	}
+
+	.tech-container {
+		display: flex;
+		justify-content: space-around;
+		gap: 2rem;
+	}
+
+	.tech-column {
+		flex: 1;
+		padding: 15px;
+		text-align: center;
+		font-weight: bold;
 	}
 </style>
