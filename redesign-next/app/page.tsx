@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Nav from "../components/nav";
 import "./home.css";
-import { BrowserRouter, Link } from "react-router-dom";
 
 export default function Home() {
   const [isH1Visible, setIsH1Visible] = useState(false);
@@ -23,7 +24,7 @@ export default function Home() {
     `title-element ${isVisible ? "is-visible" : ""}`;
 
   return (
-    <BrowserRouter><div>
+    <div>
       <section id="home" className="section">
         <div className="section-content">
           <div className="split-screen">
@@ -36,7 +37,7 @@ export default function Home() {
               </p>
             </div>
             <div className="pane">
-              <Link to="#about">
+              <Link href="#about">
                 <button className={getClass(isButtonVisible) + " view-work-button"}>
                   <div style={{ fontSize: "20px" }}>View my work</div>
                   <span style={{ fontSize: "18px" }}>↓</span>
@@ -46,16 +47,31 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <div className="nav-bar">
+        <Nav />
+      </div>
       <section id="about" className="section">
+        <div className="section-header">
+          <h1 className="text-5xl">About</h1>
+        </div>
         <div className="section-content">
           <div className="split-screen">
             <div className="pane">
-              <h1 className={getClass(isH1Visible)}>About</h1>
+              <p>
+                A deeply passionate full stack and app developer with whom learning never stops. I have
+                experience in a wide range of technologies and frameworks, and I am always looking for
+                new opportunities to learn and grow. I also have experience with cloud services and
+                deployment. When not coding, I enjoy playing video games, reading books, hiking,
+                snowboarding and spending time with my wife and dog.
+              </p>
+            </div>
+            <div className="pane">
+              <p>lorem ipsum text</p>
             </div>
           </div>
         </div>
       </section>
-    </div></BrowserRouter>
-
+    </div>
   );
 }
+
