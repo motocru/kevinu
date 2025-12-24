@@ -1,8 +1,34 @@
 "use client";
 import './home.css';
 import FlyInComponent from '../flyInComponent';
+import { useEffect, useState } from 'react';
 
 export default function About() {
+    const initialBooleans = new Array(16).fill(false);
+    const [techToggles, setToggles] = useState<boolean[]>(initialBooleans);
+
+    useEffect(() => {
+        let timers: NodeJS.Timeout[] = [];
+
+        techToggles.forEach((_, index) => {
+            const timer = setTimeout(() => {
+                setToggles((prevToggles) => {
+                    // 1. Create a shallow copy of the previous state
+                    const nextToggles = [...prevToggles];
+                    // 2. Update only the specific index
+                    nextToggles[index] = true;
+                    return nextToggles;
+                });
+            }, (Math.random() * (16 - 1) + 1) * 100);
+
+            timers.push(timer);
+        });
+        return () => timers.forEach(clearTimeout);
+    }, []);
+
+    const getVisible = (isVisible: boolean) =>
+        `tech-element ${isVisible ? "is-visible" : ""}`;
+
     return (
         <section id="about" className="section">
             <div className="section-header">
@@ -26,42 +52,74 @@ export default function About() {
                                 {/* TODO: Add checks for the background color and replace with
                                     images that don't blend into the background */}
                                 <div className="tech-column">
-                                    <img src='/csharp.png' className="tech-images" alt="C#" />
-                                    <label htmlFor="CSharp">C#</label>
-                                    <img src='/css-3.svg' className="tech-images" alt="CSS" />
-                                    <label htmlFor="CSS">CSS</label>
-                                    <img src='/dotnet-logo.png' className="tech-images" alt=".NET" />
-                                    <label htmlFor=".NET">.NET</label>
-                                    <img src='/expressjs.svg' className="tech-images" alt="Express" />
-                                    <label htmlFor="Express">Express.JS</label>
-                                    <img src='/html-logo.png' className="tech-images" alt="HTML" />
-                                    <label htmlFor="HTML">HTML</label>
+                                    <div className={getVisible(techToggles[0])}>
+                                        <img src='/csharp.png' className='tech-images' alt="C#" />
+                                        <label htmlFor="CSharp">C#</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[1])}>
+                                        <img src='/css-3.svg' className='tech-images' alt="CSS" />
+                                        <label htmlFor="CSS">CSS</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[2])}>
+                                        <img src='/dotnet-logo.png' className='tech-images' alt=".NET" />
+                                        <label htmlFor=".NET">.NET</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[3])}>
+                                        <img src='/expressjs.svg' className='tech-images' alt="Express" />
+                                        <label htmlFor="Express">Express.JS</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[4])}>
+                                        <img src='/html-logo.png' className='tech-images' alt="HTML" />
+                                        <label htmlFor="HTML">HTML</label>
+                                    </div>
                                 </div>
                                 <div className="tech-column">
-                                    <img src='/graphQL.png' className="tech-images" alt="GraphQL" />
-                                    <label htmlFor="GraphQL">GraphQL</label>
-                                    <img src='/MySQL-Logo.png' className="tech-images" alt="MySQL" />
-                                    <label htmlFor="MySQL">MySQL</label>
-                                    <img src='/nodejs-icon.svg' className="tech-images" alt="Node.js" />
-                                    <label htmlFor="Node.js">Node.js</label>
-                                    <img src='/svelte.png' className="tech-images" alt="Svelte" />
-                                    <label htmlFor="Svelte">Svelte</label>
-                                    <img src='/react.svg' className="tech-images" alt="React" />
-                                    <label htmlFor="React">React</label>
-                                    <img src='/mongodb.png' className="tech-images" alt="MongoDB" />
-                                    <label htmlFor="MongoDB">MongoDB</label>
+                                    <div className={getVisible(techToggles[5])}>
+                                        <img src='/graphQL.png' className='tech-images' alt="GraphQL" />
+                                        <label htmlFor="GraphQL">GraphQL</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[6])}>
+                                        <img src='/MySQL-Logo.png' className='tech-images' alt="MySQL" />
+                                        <label htmlFor="MySQL">MySQL</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[7])}>
+                                        <img src='/nodejs-icon.svg' className='tech-images' alt="Node.js" />
+                                        <label htmlFor="Node.js">Node.js</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[8])}>
+                                        <img src='/svelte.png' className='tech-images' alt="Svelte" />
+                                        <label htmlFor="Svelte">Svelte</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[9])}>
+                                        <img src='/react.svg' className='tech-images' alt="React" />
+                                        <label htmlFor="React">React</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[10])}>
+                                        <img src='/mongodb.png' className='tech-images' alt="MongoDB" />
+                                        <label htmlFor="MongoDB">MongoDB</label>
+                                    </div>
                                 </div>
                                 <div className="tech-column">
-                                    <img src='/typescript.png' className="tech-images" alt="TypeScript" />
-                                    <label htmlFor="TypeScript">TypeScript</label>
-                                    <img src='/dart.png' className="tech-images" alt="Dart" />
-                                    <label htmlFor="Dart">Dart</label>
-                                    <img src='/flutter.png' className="tech-images" alt="Flutter" />
-                                    <label htmlFor="Flutter">Flutter</label>
-                                    <img src='/google-cloud.png' className="tech-images" alt="Google Cloud" />
-                                    <label htmlFor="Google Cloud">Google Cloud</label>
-                                    <img src='/nextjs.svg' className="tech-images" alt="Next.js" />
-                                    <label htmlFor="Next.js">Next.JS</label>
+                                    <div className={getVisible(techToggles[11])}>
+                                        <img src='/typescript.png' className='tech-images' alt="TypeScript" />
+                                        <label htmlFor="TypeScript">TypeScript</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[12])}>
+                                        <img src='/dart.png' className='tech-images' alt="Dart" />
+                                        <label htmlFor="Dart">Dart</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[13])}>
+                                        <img src='/flutter.png' className='tech-images' alt="Flutter" />
+                                        <label htmlFor="Flutter">Flutter</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[14])}>
+                                        <img src='/google-cloud.png' className='tech-images' alt="Google Cloud" />
+                                        <label htmlFor="Google Cloud">Google Cloud</label>
+                                    </div>
+                                    <div className={getVisible(techToggles[15])}>
+                                        <img src='/nextjs.svg' className='tech-images' alt="Next.js" />
+                                        <label htmlFor="Next.js">Next.JS</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

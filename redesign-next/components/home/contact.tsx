@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { sendEmail } from "../../lib/smtp";
 
 export default function Contact() {
     const formattedText = 'Have a question or want to contact me for a project?\n' +
@@ -16,11 +17,14 @@ export default function Contact() {
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
         const message = formData.get('message') as string;
-        setShowNameError(!name);
-        setShowEmailError(!email);
-        setShowMessageError(!message);
+        if (!name || !email || !message) {
+            setShowNameError(!name);
+            setShowEmailError(!email);
+            setShowMessageError(!message);
+            return;
+        }
 
-        console.log(name, email, message);
+        await sendEmail();
     }
 
     const getClass = (isVisible: boolean) =>

@@ -52,6 +52,15 @@
     transform: translateY(0);
 }
 
+.tech-element {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.tech-element.is-visible {
+    opacity: 1;
+}
+
 .view-work-button {
     border: 1px solid #f7f6f6;
     cursor: pointer;

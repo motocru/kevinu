@@ -19,7 +19,7 @@ export default function Home() {
         return () => timers.forEach(clearTimeout);
     }, []);
 
-    const getClass = (isVisible: boolean) =>
+    const getVisible = (isVisible: boolean) =>
         `title-element ${isVisible ? "is-visible" : ""}`;
 
     return (
@@ -27,16 +27,16 @@ export default function Home() {
             <div className="section-content">
                 <div className="split-screen">
                     <div className="pane">
-                        <h1 className={getClass(isH1Visible)}>Kevin Urban</h1>
-                        <h2 className={getClass(isH2Visible)}>Full Stack Developer</h2>
-                        <p className={getClass(isPVisible)}>
+                        <h1 className={getVisible(isH1Visible)}>Kevin Urban</h1>
+                        <h2 className={getVisible(isH2Visible)}>Full Stack Developer</h2>
+                        <p className={getVisible(isPVisible)}>
                             My name is Kevin Urban and I am a full stack developer with a passion for creating
                             innovative and user-friendly web applications.
                         </p>
                     </div>
                     <div className="pane">
                         <Link href="#about">
-                            <button className={getClass(isButtonVisible) + " view-work-button"}>
+                            <button className={getVisible(isButtonVisible) + " view-work-button"}>
                                 <div style={{ fontSize: "20px" }}>View my work</div>
                                 <span style={{ fontSize: "18px" }}>↓</span>
                             </button>
