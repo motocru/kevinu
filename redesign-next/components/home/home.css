@@ -79,16 +79,6 @@
     color: rgb(207, 2, 2);
 }
 
-.nav-wrapper {
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    margin-left: -3rem;
-    margin-right: -3rem;
-}
-
 .profile-image {
     width: 40%;
     border-radius: 50%;
