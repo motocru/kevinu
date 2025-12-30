@@ -1,12 +1,20 @@
-export default function Nav() {
+import Link from "next/link";
+import './nav.css';
+
+export default function Nav({ activeId }: { activeId: string }) {
+
+    const getActive = (id: string) => {
+        return `nav-text ${id === activeId ? "active" : ""}`;
+    }
+
     return (
-        <nav className="bg-black text-white p-4 flex justify-between items-center">
-            <a href="/" className="hover:text-gray-300 transition-colors">Home</a>
+        <nav className="nav-bar">
+            <Link href="/" className={getActive("home")}>Home</Link>
             <ul className="flex gap-6">
-                <li><a href="#about" className="hover:text-gray-300 transition-colors">About</a></li>
-                <li><a href="#projects" className="hover:text-gray-300 transition-colors">Projects</a></li>
-                <li><a href="#resume" className="hover:text-gray-300 transition-colors">Resume</a></li>
-                <li><a href="#contact" className="hover:text-gray-300 transition-colors">Contact</a></li>
+                <li><Link href="#about" className={getActive("about")}>About</Link></li>
+                <li><Link href="#projects" className={getActive("projects")}>Projects</Link></li>
+                <li><Link href="#resume" className={getActive("resume")}>Resume</Link></li>
+                <li><Link href="#contact" className={getActive("contact")}>Contact</Link></li>
             </ul>
         </nav>
     )

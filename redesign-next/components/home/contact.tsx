@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { sendEmail } from "../../lib/smtp";
+import SectionComponent from "./sectionComponent";
 
-export default function Contact() {
-    const formattedText = 'Have a question or want to contact me for a project?\n' +
-        'Leave a detailed message below and I will try to get back to you as soon as possible.';
-
+export default function Contact({ idCallback }: { idCallback?: (id: string) => void }) {
     const [showNameError, setShowNameError] = useState(false);
     const [showEmailError, setShowEmailError] = useState(false);
     const [showMessageError, setShowMessageError] = useState(false);
@@ -24,21 +22,27 @@ export default function Contact() {
             return;
         }
 
-        await sendEmail();
+        const error = await sendEmail(name, email, message);
+        //TODO: I need to figure out how to properly get logs from the server without having to SSH
+        if (error) {
+            console.log(error.message);
+        }
     }
 
     const getClass = (isVisible: boolean) =>
         `title-element ${isVisible ? "is-visible" : ""}`;
 
     return (
-        <section id="contact" className="section">
+        <SectionComponent id="contact" callback={idCallback}>
             <div className="section-header">
                 <h1 className="text-5xl">Contact</h1>
             </div>
             <div className="section-content">
-                {/* TODO: Add contact content */}
                 <div className="pane">
-                    <p className="text-xl" style={{ textAlign: "center", padding: "2rem" }}>{formattedText}</p>
+                    <p className="text-xl" style={{ textAlign: "center", padding: "2rem" }}>
+                        Have a question or want to contact me for a project?<br></br>
+                        Leave a detailed message below and I will try to get back to you as soon as possible.
+                    </p>
                     <div>
                         <form className="contact-form" onSubmit={handleContactFormSubmit}>
                             <input type="text" placeholder="Name" name="name" />
@@ -61,6 +65,6 @@ export default function Contact() {
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionComponent>
     );
 }

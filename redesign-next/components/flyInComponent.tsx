@@ -8,13 +8,14 @@ const flyInVariants: Variants = {
     visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeOut" } }, // Flies in
 }
 
-export default function FlyInComponent({ children }: { children: React.ReactNode }) {
+export default function FlyInComponent({ children, callback }: { children: React.ReactNode, callback?: () => void }) {
     const controls = useAnimation();
     const [ref, inView] = useInView();
 
     useEffect(() => {
         if (inView) {
             controls.start("visible");
+            callback?.();
         }
     }, [controls, inView]);
 

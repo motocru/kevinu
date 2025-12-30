@@ -1,13 +1,14 @@
 "use client";
 import './home.css';
 import FlyInComponent from '../flyInComponent';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import SectionComponent from "./sectionComponent";
 
-export default function About() {
+export default function About({ idCallback }: { idCallback?: (id: string) => void }) {
     const initialBooleans = new Array(16).fill(false);
     const [techToggles, setToggles] = useState<boolean[]>(initialBooleans);
 
-    useEffect(() => {
+    function toggleTech() {
         let timers: NodeJS.Timeout[] = [];
 
         techToggles.forEach((_, index) => {
@@ -24,22 +25,22 @@ export default function About() {
             timers.push(timer);
         });
         return () => timers.forEach(clearTimeout);
-    }, []);
+    }
 
     const getVisible = (isVisible: boolean) =>
         `tech-element ${isVisible ? "is-visible" : ""}`;
 
     return (
-        <section id="about" className="section">
+        <SectionComponent id="about" callback={idCallback}>
             <div className="section-header">
                 <h1 className="text-5xl">About</h1>
             </div>
             <div className="section-content">
-                <FlyInComponent>
+                <FlyInComponent callback={toggleTech}>
                     <div className="split-screen">
                         <div className="pane">
                             <img src='/headshot.png' className="profile-image" alt="Profile" />
-                            <p>
+                            <p style={{ marginLeft: "3rem", marginRight: "3rem" }}>
                                 A deeply passionate full stack and app developer with whom learning never stops. I have
                                 experience in a wide range of technologies and frameworks, and I am always looking for
                                 new opportunities to learn and grow. I also have experience with cloud services and
@@ -61,11 +62,11 @@ export default function About() {
                                         <label htmlFor="CSS">CSS</label>
                                     </div>
                                     <div className={getVisible(techToggles[2])}>
-                                        <img src='/dotnet-logo.png' className='tech-images' alt=".NET" />
+                                        <img src='/dotnet.png' className='tech-images' alt=".NET" />
                                         <label htmlFor=".NET">.NET</label>
                                     </div>
                                     <div className={getVisible(techToggles[3])}>
-                                        <img src='/expressjs.svg' className='tech-images' alt="Express" />
+                                        <img src='/expressjs-white.svg' className='tech-images' alt="Express" />
                                         <label htmlFor="Express">Express.JS</label>
                                     </div>
                                     <div className={getVisible(techToggles[4])}>
@@ -117,7 +118,7 @@ export default function About() {
                                         <label htmlFor="Google Cloud">Google Cloud</label>
                                     </div>
                                     <div className={getVisible(techToggles[15])}>
-                                        <img src='/nextjs.svg' className='tech-images' alt="Next.js" />
+                                        <img src='/nextjs-white.svg' className='tech-images' alt="Next.js" />
                                         <label htmlFor="Next.js">Next.JS</label>
                                     </div>
                                 </div>
@@ -126,6 +127,6 @@ export default function About() {
                     </div>
                 </FlyInComponent>
             </div>
-        </section>
+        </SectionComponent>
     );
 }

@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import SectionComponent from "./sectionComponent";
 import './home.css';
 
-export default function Home() {
+export default function Home({ idCallback }: { idCallback?: (id: string) => void }) {
     const [isH1Visible, setIsH1Visible] = useState(false);
     const [isH2Visible, setIsH2Visible] = useState(false);
     const [isPVisible, setIsPVisible] = useState(false);
@@ -23,7 +24,7 @@ export default function Home() {
         `title-element ${isVisible ? "is-visible" : ""}`;
 
     return (
-        <section id="home" className="section">
+        <SectionComponent id="home" callback={idCallback}>
             <div className="section-content">
                 <div className="split-screen">
                     <div className="pane">
@@ -44,6 +45,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </section>
+        </SectionComponent>
     );
 }
