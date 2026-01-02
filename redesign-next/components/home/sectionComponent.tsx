@@ -8,7 +8,6 @@ export default function SectionComponent({ children, id, callback }:
         threshold: [0, 0.25, 0.5, 0.75, 1],
         onChange: (inView, entry) => {
             if (entry.intersectionRatio > 0.5) {
-                console.log(`Section ${id} is greater than 50%`);
                 callback?.(id);
             }
         }

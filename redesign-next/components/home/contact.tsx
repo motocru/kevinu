@@ -3,11 +3,14 @@
 import { useState } from "react";
 import { sendEmail } from "../../lib/smtp";
 import SectionComponent from "./sectionComponent";
+import ToastList from "../toast/ToastList/toastList";
+import { Toast, setToast } from "../toast/toastFunction";
 
 export default function Contact({ idCallback }: { idCallback?: (id: string) => void }) {
     const [showNameError, setShowNameError] = useState(false);
     const [showEmailError, setShowEmailError] = useState(false);
     const [showMessageError, setShowMessageError] = useState(false);
+    const [toasts, setToasts] = useState<Toast[]>([]);
 
     async function handleContactFormSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -19,6 +22,12 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
             setShowNameError(!name);
             setShowEmailError(!email);
             setShowMessageError(!message);
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: "Please fill out all fields",
+                type: "failure"
+            };
+            setToast(toast, setToasts);
             return;
         }
 
@@ -26,11 +35,38 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
         //TODO: I need to figure out how to properly get logs from the server without having to SSH
         if (error) {
             console.log(error.message);
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: error.message,
+                type: "failure"
+            };
+            setToast(toast, setToasts);
+        } else {
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: "Message sent successfully",
+                type: "success"
+            };
+            setToast(toast, setToasts);
+            clearForm();
         }
     }
 
     const getClass = (isVisible: boolean) =>
         `title-element ${isVisible ? "is-visible" : ""}`;
+
+    const removeToast = (id: string) => {
+        setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+    };
+
+    const clearForm = () => {
+        setShowNameError(false);
+        setShowEmailError(false);
+        setShowMessageError(false);
+
+        const form = document.querySelector('form') as HTMLFormElement;
+        form.reset();
+    };
 
     return (
         <SectionComponent id="contact" callback={idCallback}>
@@ -54,10 +90,11 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
                                     {showEmailError && <p className={getClass(showEmailError)}>Please enter a valid email</p>}
                                     {showMessageError && <p className={getClass(showMessageError)}>Please enter your message</p>}
                                 </div>
+                                <ToastList data={toasts} position="bottom-right" removeToast={removeToast} />
                                 <div className="contact-form-pane">
                                     <div className="submit-column">
-                                        <button type="submit">SEND</button>
-                                        <button type="reset">CLEAR</button>
+                                        <button className="slide-button" type="submit">SEND</button>
+                                        <button className="slide-button" type="button" onClick={clearForm}>CLEAR</button>
                                     </div>
                                 </div>
                             </div>
