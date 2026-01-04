@@ -10,8 +10,6 @@ const pool = mysql.createPool({
     queueLimit: 0,
 }).promise();
 
-export default pool;
-
 export async function SelectQuery<T>(query: string, values?: any): Promise<Partial<T>[]> {
     const [result] = await pool.query(query, values);
     return result as Partial<T>[];

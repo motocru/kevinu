@@ -15,6 +15,14 @@ export interface Game {
     guessColor: string;
 }
 
+interface NewGameBody {
+    level: number;
+    font: string;
+    textColor: string;
+    bgColor: string;
+    guessColor: string;
+}
+
 export default function GrammarGuru() {
     //settings values that need to be set
     const [font, setFont] = useState("Arial");
@@ -33,19 +41,23 @@ export default function GrammarGuru() {
     //creates the game
     function createGame() {
         //build detail to send to server
-        const game: Game = {
-            id: playerId,
+        const newGame: NewGameBody = {
             level: level,
-            phrase: "",
-            remaining: 0,
-            answer: null,
-            status: "",
             font: font,
             textColor: textColor,
             bgColor: bgColor,
             guessColor: guessColor
         };
-        games.push(game);
+        console.log(newGame);
+        fetch(`http://localhost:3001/wordgame/${playerId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(newGame),
+        });
+        //games.push(newGame);
     }
 
     return (
@@ -83,7 +95,7 @@ export default function GrammarGuru() {
                     </div>
                     {/* start button */}
                     <div className="setting-section" style={{ justifyContent: "flex-end" }}>
-                        <button className="new-game-button">New Game</button>
+                        <button className="new-game-button" onClick={createGame}>New Game</button>
                     </div>
                 </div>
                 {/* game table */}

@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "dev-server": "nodemon --exec tsx server/server.ts"
+    "dev-server": "nodemon --env-file=.env --exec tsx server/server.ts"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.2.1",
     "framer-motion": "^12.23.26",
+    "fs": "^0.0.1-security",
     "mysql2": "^3.16.0",
     "next": "16.0.10",
     "react": "19.2.1",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^20.19.27",
     "@types/react": "^19",
