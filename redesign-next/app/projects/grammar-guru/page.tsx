@@ -7,7 +7,7 @@ export interface Game {
     level: number;
     phrase: string;
     remaining: number;
-    answer: string | null;
+    answer?: string;
     status: string;
     font: string;
     textColor: string;
@@ -30,16 +30,17 @@ export default function GrammarGuru() {
     const [bgColor, setBgColor] = useState("#782310");
     const [guessColor, setGuessColor] = useState("#237526");
     const [level, setLevel] = useState(1);
+    const [games, setGames] = useState<Game[]>([]);
+    const [currentGame, setCurrentGame] = useState<Game | undefined>(undefined);
 
     //consts for the game
     const fontOptions = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia",
         "Comic Sans MS", "Impact", "Lucida Sans Unicode", "Trebuchet MS", "Arial Black"];
     const levelOptions = [{ value: 0, label: "Easy" }, { value: 1, label: "Medium" }, { value: 2, label: "Hard" }];
-    const games: Game[] = [];
     const playerId = crypto.randomUUID();
 
     //creates the game
-    function createGame() {
+    async function createGame() {
         //build detail to send to server
         const newGame: NewGameBody = {
             level: level,
@@ -48,8 +49,8 @@ export default function GrammarGuru() {
             bgColor: bgColor,
             guessColor: guessColor
         };
-        console.log(newGame);
-        fetch(`http://localhost:3001/wordgame/${playerId}`, {
+
+        await fetch(`http://localhost:3001/wordgame/${playerId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -57,7 +58,21 @@ export default function GrammarGuru() {
             },
             body: JSON.stringify(newGame),
         });
-        //games.push(newGame);
+
+        //now fetch all games for the user
+        const playerGames = await fetch(`http://localhost:3001/wordgame/${playerId}`);
+        const playerGamesJson = await playerGames.json();
+        games.length = 0;
+        setGames(playerGamesJson);
+
+    }
+
+    //gets the game
+    async function getGame(gameId: string) {
+        const game = await fetch(`http://localhost:3001/wordgame/${playerId}/${gameId}`);
+        const gameJson = await game.json();
+        console.log(gameJson);
+        games.push(gameJson);
     }
 
     return (
@@ -111,8 +126,8 @@ export default function GrammarGuru() {
                             </tr>
                         </thead>
                         <tbody>
-                            {games.map((game) => (
-                                <tr>
+                            {games.map((game, key) => (
+                                <tr key={key}>
                                     <td>{levelOptions.find((level) => level.value === game.level)?.label}</td>
                                     <td className="letters">{game.phrase}</td>
                                     <td>{game.remaining}</td>

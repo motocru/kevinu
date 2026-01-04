@@ -16,7 +16,7 @@ interface GameData {
     level: number;
     phrase: string;
     remaining: number;
-    answer: string;
+    answer?: string;
     status: string;
     font: string;
     textColor: string;
@@ -49,7 +49,7 @@ const levelData: levelData[] = [
 ];
 
 async function getGameById(id: string) {
-    const result = await SelectQuery("SELECT * FROM games WHERE id = ?", [id]);
+    const result = await SelectQuery("SELECT * FROM wordgame WHERE id = ?", [id]);
     return result[0];
 }
 
@@ -66,8 +66,6 @@ function wordPick(level: levelData) {
 
 //creates a new game for the specified user
 router.post("/:user", async (req, res) => {
-    console.log(levelData);
-    console.log(req.body);
     const gameBody: NewGameBody = req.body;
     //get a word based on the level
     const level = levelData[gameBody.level];
@@ -76,9 +74,9 @@ router.post("/:user", async (req, res) => {
         user: req.params.user,
         id: crypto.randomUUID(),
         level: gameBody.level,
-        phrase: word.replace(/./g, "_"),
+        phrase: word.replace(/./g, "_").toString(),
         remaining: level.rounds,
-        answer: word,
+        answer: word.toString(),
         status: "In Progress",
         font: gameBody.font,
         textColor: gameBody.textColor,
@@ -86,22 +84,30 @@ router.post("/:user", async (req, res) => {
         guessColor: gameBody.guessColor
     };
     const result = await InsertQuery("INSERT INTO wordgame SET ?", game);
-    console.log(result);
     res.json(result);
 });
 
 //gets all the games for a specific user
 router.get("/:user", async (req, res) => {
-    const game = await getGameById(req.params.user);
-    res.json(game);
+    const result = await SelectQuery<GameRow>("SELECT * FROM wordgame WHERE user = ?", [req.params.user]);
+    result.forEach(game => {
+        if (game.status === "In Progress") {
+            delete game.answer;
+        }
+    });
+    res.json(result);
 });
 
 //gets the details for a specific user and game
 router.get("/:user/:id", async (req, res) => {
-    const result = await SelectQuery<GameRow[]>("SELECT * FROM games WHERE id = ?, user = ?", [req.params.id, req.params.user]);
-    //there needs to be checks if the game exists
-    const game = result[0];
-    res.json(game);
+    const result = await SelectQuery<GameRow>("SELECT * FROM wordgame WHERE id = ? AND user = ?", [req.params.id, req.params.user]);
+    if (result.length > 0) {
+        const game = result[0];
+        res.json(game);
+    }
+    else {
+        res.status(204);
+    }
 });
 
 export { router };

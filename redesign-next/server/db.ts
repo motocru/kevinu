@@ -10,9 +10,9 @@ const pool = mysql.createPool({
     queueLimit: 0,
 }).promise();
 
-export async function SelectQuery<T>(query: string, values?: any): Promise<Partial<T>[]> {
+export async function SelectQuery<T>(query: string, values?: any): Promise<T[]> {
     const [result] = await pool.query(query, values);
-    return result as Partial<T>[];
+    return result as T[];
 }
 
 export async function InsertQuery<T>(query: string, values: T): Promise<ResultSetHeader> {
