@@ -1,6 +1,7 @@
 "use client";
 import './gg.css';
 import { useState } from "react";
+import Modal from "@/components/modal/modal";
 
 export interface Game {
     id: string;
@@ -32,6 +33,8 @@ export default function GrammarGuru() {
     const [level, setLevel] = useState(1);
     const [games, setGames] = useState<Game[]>([]);
     const [currentGame, setCurrentGame] = useState<Game | undefined>(undefined);
+    const [showModal, setShowModal] = useState(false);
+    const [guess, setGuess] = useState("");
 
     //consts for the game
     const fontOptions = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia",
@@ -50,7 +53,7 @@ export default function GrammarGuru() {
             guessColor: guessColor
         };
 
-        await fetch(`http://localhost:3001/wordgame/${playerId}`, {
+        var newGameResponse = await fetch(`http://localhost:3001/wordgame/${playerId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -59,12 +62,22 @@ export default function GrammarGuru() {
             body: JSON.stringify(newGame),
         });
 
+        if (newGameResponse.ok) {
+            const newGameJson = await newGameResponse.json();
+            setCurrentGame(newGameJson);
+        } else {
+            console.log("Failed to create game");
+            //TODO: show an error toast here
+        }
+
         //now fetch all games for the user
         const playerGames = await fetch(`http://localhost:3001/wordgame/${playerId}`);
         const playerGamesJson = await playerGames.json();
         games.length = 0;
         setGames(playerGamesJson);
 
+        //pop open the modal for the new game
+        setShowModal(true);
     }
 
     //gets the game
@@ -72,7 +85,12 @@ export default function GrammarGuru() {
         const game = await fetch(`http://localhost:3001/wordgame/${playerId}/${gameId}`);
         const gameJson = await game.json();
         console.log(gameJson);
-        games.push(gameJson);
+        setCurrentGame(gameJson);
+        setShowModal(true);
+    }
+
+    async function submitGuess() {
+
     }
 
     return (
@@ -127,7 +145,7 @@ export default function GrammarGuru() {
                         </thead>
                         <tbody>
                             {games.map((game, key) => (
-                                <tr key={key}>
+                                <tr key={key} onClick={() => getGame(game.id)}>
                                     <td>{levelOptions.find((level) => level.value === game.level)?.label}</td>
                                     <td className="letters">{game.phrase}</td>
                                     <td>{game.remaining}</td>
@@ -148,6 +166,16 @@ export default function GrammarGuru() {
                     </table>
                 </div>
             </div>
+
+            {/* game modal */}
+            {showModal && (
+                <Modal onClose={() => setShowModal(false)}>
+                    <form onSubmit={submitGuess}>
+                        <input type="text" maxLength={1} value={guess} onChange={(e) => setGuess(e.target.value)} />
+                        <button type="submit">Guess</button>
+                    </form>
+                </Modal>
+            )}
         </div>
     );
 }

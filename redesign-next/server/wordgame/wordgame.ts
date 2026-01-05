@@ -48,9 +48,16 @@ const levelData: levelData[] = [
     { minLength: 9, maxLength: 300, rounds: 6 },
 ];
 
-async function getGameById(id: string) {
-    const result = await SelectQuery("SELECT * FROM wordgame WHERE id = ?", [id]);
-    return result[0];
+async function getGameById(id: string, user: string) {
+    const result = await SelectQuery<GameRow>("SELECT * FROM wordgame WHERE id = ? AND user = ?", [id, user]);
+    if (result.length === 0) {
+        return null;
+    }
+    const game = result[0];
+    if (game.status === "In Progress") {
+        delete game.answer;
+    }
+    return game;
 }
 
 function wordPick(level: levelData) {
@@ -70,9 +77,10 @@ router.post("/:user", async (req, res) => {
     //get a word based on the level
     const level = levelData[gameBody.level];
     const word = wordPick(level);
+    const gameID = crypto.randomUUID();
     const game: GameData = {
         user: req.params.user,
-        id: crypto.randomUUID(),
+        id: gameID,
         level: gameBody.level,
         phrase: word.replace(/./g, "_").toString(),
         remaining: level.rounds,
@@ -84,7 +92,13 @@ router.post("/:user", async (req, res) => {
         guessColor: gameBody.guessColor
     };
     const result = await InsertQuery("INSERT INTO wordgame SET ?", game);
-    res.json(result);
+    if (result.warningStatus === 0) {
+        const game = await getGameById(gameID, req.params.user);
+        res.json(game);
+    }
+    else {
+        res.status(500).json({ error: "Failed to create game" });
+    }
 });
 
 //gets all the games for a specific user
@@ -100,9 +114,8 @@ router.get("/:user", async (req, res) => {
 
 //gets the details for a specific user and game
 router.get("/:user/:id", async (req, res) => {
-    const result = await SelectQuery<GameRow>("SELECT * FROM wordgame WHERE id = ? AND user = ?", [req.params.id, req.params.user]);
-    if (result.length > 0) {
-        const game = result[0];
+    const game = await getGameById(req.params.id, req.params.user);
+    if (game) {
         res.json(game);
     }
     else {
