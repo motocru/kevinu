@@ -22,6 +22,7 @@ interface GameData {
     textColor: string;
     bgColor: string;
     guessColor: string;
+    guesses?: string;
 }
 
 interface GameRow extends GameData, RowDataPacket {
@@ -69,6 +70,16 @@ function wordPick(level: levelData) {
         pick = wordlist[getInt()];
     }
     return pick;
+}
+
+function replaceCharAt(phrase: string, answer: string, char: string) {
+    var newPhrase = phrase;
+    for (let i = 0; i < answer.length; i++) {
+        if (answer[i] === char) {
+            newPhrase = newPhrase.substring(0, i) + char + newPhrase.substring(i + 1);
+        }
+    }
+    return newPhrase;
 }
 
 //creates a new game for the specified user
@@ -122,5 +133,47 @@ router.get("/:user/:id", async (req, res) => {
         res.status(204);
     }
 });
+
+router.put('/:user/:id', async (req, res) => {
+    if (!req.query.guess) {
+        res.status(400).json({ error: "Missing guess" });
+        return;
+    }
+    const game = await getGameById(req.params.id, req.params.user);
+    if (game) {
+        //necessary checks to determine if the guess is valid
+        const guess = req.query.guess.toString();
+        if (guess.length > 1) {
+            res.send(400).json({ error: "Guess must be a single letter" });
+        }
+        if (game.phrase.includes(guess) || game.guesses?.includes(guess)) {
+            res.send(400).json({ error: "Guess already made" });
+        }
+        //determine if the guess is correct
+        game.guesses = game.guesses + guess;
+        if (game.answer?.includes(guess)) {
+            game.phrase = replaceCharAt(game.phrase, game.answer, guess);
+            if (game.phrase === game.answer) {
+                game.status = "Victory";
+            }
+        } else {
+            game.remaining--;
+            if (game.remaining === 0) {
+                game.status = "Loss";
+            }
+        }
+        //update the game
+        const result = await UpdateQuery("UPDATE wordgame SET ? WHERE id = ? AND user = ?", [game, req.params.id, req.params.user]);
+        if (result.warningStatus === 0) {
+            res.json(game);
+        }
+        else {
+            res.status(500).json({ error: "Failed to update game" });
+        }
+    }
+    else {
+        res.status(204);
+    }
+})
 
 export { router };

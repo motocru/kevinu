@@ -8,6 +8,7 @@ export interface Game {
     level: number;
     phrase: string;
     remaining: number;
+    guesses?: string;
     answer?: string;
     status: string;
     font: string;
@@ -169,10 +170,18 @@ export default function GrammarGuru() {
 
             {/* game modal */}
             {showModal && (
-                <Modal onClose={() => setShowModal(false)}>
+                <Modal onClose={() => setShowModal(false)} header={`Guesses remaining: ${currentGame?.remaining ?? 0}`}>
                     <form onSubmit={submitGuess}>
-                        <input type="text" maxLength={1} value={guess} onChange={(e) => setGuess(e.target.value)} />
-                        <button type="submit">Guess</button>
+                        <div className='input-inline'>
+                            <div>
+                                <label htmlFor="guess">Guess:</label>
+                                <input id="guess" type="text" maxLength={1} value={guess} onChange={(e) => setGuess(e.target.value)} />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </div>
+                        <div className="input-inline">
+                            <h3>Letters Guessed: {currentGame?.guesses ?? ""}</h3>
+                        </div>
                     </form>
                 </Modal>
             )}

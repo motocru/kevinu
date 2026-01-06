@@ -74,6 +74,12 @@
     width: 85%;
 }
 
+.input-inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 15px 0;

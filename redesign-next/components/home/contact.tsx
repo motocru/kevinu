@@ -11,9 +11,11 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
     const [showEmailError, setShowEmailError] = useState(false);
     const [showMessageError, setShowMessageError] = useState(false);
     const [toasts, setToasts] = useState<Toast[]>([]);
+    const [loading, setLoading] = useState(false);
 
     async function handleContactFormSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        setLoading(true);
         const formData = new FormData(event.currentTarget);
         const name = formData.get('name') as string;
         const email = formData.get('email') as string;
@@ -28,6 +30,7 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
                 type: "failure"
             };
             setToast(toast, setToasts);
+            setLoading(false);
             return;
         }
 
@@ -50,6 +53,7 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
             setToast(toast, setToasts);
             clearForm();
         }
+        setLoading(false);
     }
 
     const getClass = (isVisible: boolean) =>
@@ -79,7 +83,7 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
                         Have a question or want to contact me for a project?<br></br>
                         Leave a detailed message below and I will try to get back to you as soon as possible.
                     </p>
-                    <div>
+                    <div className="contact-form-container">
                         <form className="contact-form" onSubmit={handleContactFormSubmit}>
                             <input type="text" placeholder="Name" name="name" />
                             <input type="email" placeholder="Email" name="email" />
@@ -99,6 +103,11 @@ export default function Contact({ idCallback }: { idCallback?: (id: string) => v
                                 </div>
                             </div>
                         </form>
+                        {loading && (
+                            <div className="loading-overlay">
+                                <div className="loading-spinner"></div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
