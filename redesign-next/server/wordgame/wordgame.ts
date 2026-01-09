@@ -142,12 +142,18 @@ router.put('/:user/:id', async (req, res) => {
     const game = await getGameById(req.params.id, req.params.user);
     if (game) {
         //necessary checks to determine if the guess is valid
+        if (game.status !== "In Progress" || game.answer === game.phrase) {
+            res.status(400).json({ error: "Game is already completed" });
+            return;
+        }
         const guess = req.query.guess.toString();
         if (guess.length > 1) {
             res.send(400).json({ error: "Guess must be a single letter" });
+            return;
         }
         if (game.phrase.includes(guess) || game.guesses?.includes(guess)) {
             res.send(400).json({ error: "Guess already made" });
+            return;
         }
         //determine if the guess is correct
         game.guesses = game.guesses + guess;
@@ -158,7 +164,7 @@ router.put('/:user/:id', async (req, res) => {
             }
         } else {
             game.remaining--;
-            if (game.remaining === 0) {
+            if (game.remaining <= 0) {
                 game.status = "Loss";
             }
         }
