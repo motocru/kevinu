@@ -41,7 +41,7 @@ export default function GrammarGuru() {
     const fontOptions = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia",
         "Comic Sans MS", "Impact", "Lucida Sans Unicode", "Trebuchet MS", "Arial Black"];
     const levelOptions = [{ value: 0, label: "Easy" }, { value: 1, label: "Medium" }, { value: 2, label: "Hard" }];
-    const playerId = crypto.randomUUID();
+    const [playerId] = useState(() => crypto.randomUUID());
 
     //creates the game
     async function createGame() {
@@ -85,7 +85,6 @@ export default function GrammarGuru() {
     async function getGame(gameId: string) {
         const game = await fetch(`http://localhost:3001/wordgame/${playerId}/${gameId}`);
         const gameJson = await game.json();
-        console.log(gameJson);
         setCurrentGame(gameJson);
         setShowModal(true);
     }
@@ -146,7 +145,7 @@ export default function GrammarGuru() {
                         </thead>
                         <tbody>
                             {games.map((game, key) => (
-                                <tr key={key} onClick={() => getGame(game.id)}>
+                                <tr key={key} onClick={async () => await getGame(game.id)}>
                                     <td>{levelOptions.find((level) => level.value === game.level)?.label}</td>
                                     <td className="letters">{game.phrase}</td>
                                     <td>{game.remaining}</td>
@@ -170,7 +169,7 @@ export default function GrammarGuru() {
 
             {/* game modal */}
             {showModal && (
-                <Modal onClose={() => setShowModal(false)} header={`Guesses remaining: ${currentGame?.remaining ?? 0}`}>
+                <Modal onClose={() => setShowModal(false)} header={`Guesses remaining: ${currentGame?.remaining ?? 0}`} showModal={showModal}>
                     <form onSubmit={submitGuess}>
                         <div className='input-inline'>
                             <div>

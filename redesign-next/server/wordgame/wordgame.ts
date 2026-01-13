@@ -7,7 +7,7 @@ const router = express.Router();
 
 var wordlist: string[] = [];
 fs.readFile(require('path').resolve(__dirname, './wordlist.txt'), function (err, data) {
-    wordlist = data.toString().split('\n');
+    wordlist = data.toString().split(/\r?\n/);
 });
 
 interface GameData {
@@ -50,6 +50,7 @@ const levelData: levelData[] = [
 ];
 
 async function getGameById(id: string, user: string) {
+    console.log(id, user);
     const result = await SelectQuery<GameRow>("SELECT * FROM wordgame WHERE id = ? AND user = ?", [id, user]);
     if (result.length === 0) {
         return null;
@@ -105,7 +106,7 @@ router.post("/:user", async (req, res) => {
     const result = await InsertQuery("INSERT INTO wordgame SET ?", game);
     if (result.warningStatus === 0) {
         const game = await getGameById(gameID, req.params.user);
-        res.json(game);
+        res.status(200).json(game);
     }
     else {
         res.status(500).json({ error: "Failed to create game" });
@@ -120,17 +121,19 @@ router.get("/:user", async (req, res) => {
             delete game.answer;
         }
     });
-    res.json(result);
+    res.status(200).json(result);
 });
 
 //gets the details for a specific user and game
 router.get("/:user/:id", async (req, res) => {
     const game = await getGameById(req.params.id, req.params.user);
-    if (game) {
+    if (game !== null) {
         res.json(game);
+        return;
     }
     else {
-        res.status(204);
+        res.sendStatus(204);
+        return;
     }
 });
 
@@ -148,11 +151,11 @@ router.put('/:user/:id', async (req, res) => {
         }
         const guess = req.query.guess.toString();
         if (guess.length > 1) {
-            res.send(400).json({ error: "Guess must be a single letter" });
+            res.status(400).json({ error: "Guess must be a single letter" });
             return;
         }
         if (game.phrase.includes(guess) || game.guesses?.includes(guess)) {
-            res.send(400).json({ error: "Guess already made" });
+            res.status(400).json({ error: "Guess already made" });
             return;
         }
         //determine if the guess is correct
@@ -178,7 +181,7 @@ router.put('/:user/:id', async (req, res) => {
         }
     }
     else {
-        res.status(204);
+        res.sendStatus(204);
     }
 })
 
