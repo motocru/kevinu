@@ -112,6 +112,13 @@ export default function GrammarGuru() {
             }
             const gameJson = await game.json();
             setCurrentGame(gameJson);
+
+            //get all the games for the user to update the list and clear the guess input
+            const playerGames = await fetch(`/api/wordgame/${playerId}`);
+            const playerGamesJson = await playerGames.json();
+            games.length = 0;
+            setGames(playerGamesJson);
+            setGuess("");
         }
     }
 
