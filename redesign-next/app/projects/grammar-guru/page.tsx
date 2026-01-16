@@ -149,6 +149,7 @@ export default function GrammarGuru() {
                     </div>
                     {/* start button */}
                     <div className="setting-section" style={{ justifyContent: "flex-end" }}>
+                        {/* TODO: need some form of loading spinner to show while creating game */}
                         <button className="new-game-button" onClick={createGame}>New Game</button>
                     </div>
                 </div>
