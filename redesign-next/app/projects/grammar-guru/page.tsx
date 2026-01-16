@@ -211,9 +211,26 @@ export default function GrammarGuru() {
                         </div>
                         <div className="input-inline">
                             {/* TODO: make each of the letters it's own thing with a background color and font size etc. */}
-                            <h2 className="p-2">Letters Guessed: {currentGame?.guesses ?? ""}</h2>
+                            <h2 className="p-2">
+                                Letters Guessed:
+                                <div className='guess-letters' style={{ fontFamily: currentGame?.font }}>
+                                    {currentGame?.guesses?.split("").map((guess) => (
+                                        <span key={guess} className='guess-letter'>{guess}</span>
+                                    ))}
+                                </div>
+                            </h2>
                         </div>
                     </form>
+                    <style jsx>{`
+                        .guess-letter {
+                            display: inline-block;
+                            padding: 2px 4px;
+                            margin: 2px;
+                            background-color: ${currentGame?.bgColor};
+                            color: ${currentGame?.guessColor};
+                            font-family: ${currentGame?.font};
+                        }
+                    `}</style>
                 </Modal>
             )}
         </div>
