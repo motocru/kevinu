@@ -54,7 +54,7 @@ export default function GrammarGuru() {
             guessColor: guessColor
         };
 
-        var newGameResponse = await fetch(`http://localhost:3001/wordgame/${playerId}`, {
+        var newGameResponse = await fetch(`/api/wordgame/${playerId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function GrammarGuru() {
         }
 
         //now fetch all games for the user
-        const playerGames = await fetch(`http://localhost:3001/wordgame/${playerId}`);
+        const playerGames = await fetch(`/api/wordgame/${playerId}`);
         const playerGamesJson = await playerGames.json();
         games.length = 0;
         setGames(playerGamesJson);
@@ -83,14 +83,35 @@ export default function GrammarGuru() {
 
     //gets the game
     async function getGame(gameId: string) {
-        const game = await fetch(`http://localhost:3001/wordgame/${playerId}/${gameId}`);
+        const game = await fetch(`/api/wordgame/${playerId}/${gameId}`);
+        if (game.status !== 200) {
+            console.log("Failed to get game");
+            //TODO: show an error toast here
+            return;
+        }
         const gameJson = await game.json();
         setCurrentGame(gameJson);
         setShowModal(true);
     }
 
     async function submitGuess() {
-
+        if (currentGame) {
+            const game = await fetch(`/api/wordgame/${playerId}/${currentGame.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({ guess: guess }),
+            });
+            if (game.status !== 200) {
+                console.log("Failed to submit guess");
+                //TODO: show an error toast here
+                return;
+            }
+            const gameJson = await game.json();
+            setCurrentGame(gameJson);
+        }
     }
 
     return (
@@ -171,15 +192,17 @@ export default function GrammarGuru() {
             {showModal && (
                 <Modal onClose={() => setShowModal(false)} header={`Guesses remaining: ${currentGame?.remaining ?? 0}`} showModal={showModal}>
                     <form onSubmit={submitGuess}>
-                        <div className='input-inline'>
-                            <div>
-                                <label htmlFor="guess">Guess:</label>
-                                <input id="guess" type="text" maxLength={1} value={guess} onChange={(e) => setGuess(e.target.value)} />
+                        <div className='input-inline' style={{ justifyContent: "center" }}>
+                            <div className='pt-1'>
+                                <label className="p-2 text-xl" htmlFor="guess">Guess:</label>
+                                <input id="guess" className='guess-input' type="text" maxLength={1} value={guess} onChange={(e) => setGuess(e.target.value)} />
                             </div>
-                            <button type="submit">Submit</button>
+                            <div className='p-4'></div>
+                            <button type="submit" className="text-xl guess-submit">Submit</button>
                         </div>
                         <div className="input-inline">
-                            <h3>Letters Guessed: {currentGame?.guesses ?? ""}</h3>
+                            {/* TODO: make each of the letters it's own thing with a background color and font size etc. */}
+                            <h2 className="p-2">Letters Guessed: {currentGame?.guesses ?? ""}</h2>
                         </div>
                     </form>
                 </Modal>

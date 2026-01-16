@@ -2,13 +2,9 @@ import { RowDataPacket } from "mysql2";
 import { SelectQuery, InsertQuery, UpdateQuery, DeleteQuery } from "../db";
 import fs from "fs";
 import express from "express";
+import { getWordlist } from "./setup";
 
 const router = express.Router();
-
-var wordlist: string[] = [];
-fs.readFile(require('path').resolve(__dirname, './wordlist.txt'), function (err, data) {
-    wordlist = data.toString().split(/\r?\n/);
-});
 
 interface GameData {
     user: string;
@@ -17,7 +13,7 @@ interface GameData {
     phrase: string;
     remaining: number;
     answer?: string;
-    status: string;
+    status: 'In Progress' | 'Victory' | 'Loss';
     font: string;
     textColor: string;
     bgColor: string;
@@ -63,6 +59,7 @@ async function getGameById(id: string, user: string) {
 }
 
 function wordPick(level: levelData) {
+    const wordlist = getWordlist();
     function getInt() {
         return Math.floor(Math.random() * Math.floor(wordlist.length));
     }
