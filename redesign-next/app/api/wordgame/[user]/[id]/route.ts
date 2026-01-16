@@ -12,6 +12,7 @@ function replaceCharAt(phrase: string, answer: string, char: string) {
     return newPhrase;
 }
 
+//GET a single game from a specific user
 export async function GET(request: Request, { params }: { params: Promise<{ user: string, id: string }> }) {
     const { user, id } = await params;
     const game = await getGameById(id, user);
@@ -23,6 +24,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ user
     }
 }
 
+//update a game from a user with a single letter guess
 export async function PUT(request: Request, { params }: { params: Promise<{ user: string, id: string }> }) {
     const { user, id } = await params;
     const { guess } = await request.json() as { guess: string };
@@ -43,6 +45,9 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
             return NextResponse.json({ error: "Guess has already been made" }, { status: 400 });
         }
         //determine if the guess is correct and then update the game
+        if (!game.guesses) {
+            game.guesses = "";
+        }
         game.guesses += guess;
         if (game.answer?.includes(guess)) {
             game.phrase = replaceCharAt(game.phrase, game.answer, guess);

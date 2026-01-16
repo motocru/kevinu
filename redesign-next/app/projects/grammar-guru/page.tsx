@@ -94,7 +94,8 @@ export default function GrammarGuru() {
         setShowModal(true);
     }
 
-    async function submitGuess() {
+    async function submitGuess(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
         if (currentGame) {
             const game = await fetch(`/api/wordgame/${playerId}/${currentGame.id}`, {
                 method: "PUT",
