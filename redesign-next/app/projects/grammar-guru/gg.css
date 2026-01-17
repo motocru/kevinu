@@ -117,9 +117,21 @@ td {
     background-color: #3431d8;
 }
 
+.view-text {
+    font-size: 20px;
+}
+
 @media (max-width: 1209px) {
     .sunken-box {
         grid-template-columns: 1fr;
+    }
+
+    .input-inline {
+        flex-direction: column;
+    }
+
+    .view-text {
+        font-size: 14px;
     }
 }
 
@@ -130,5 +142,9 @@ td {
 
     .setting-section {
         flex-direction: column;
+    }
+
+    .view-text {
+        font-size: 10px;
     }
 }

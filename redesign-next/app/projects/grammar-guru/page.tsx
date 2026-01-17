@@ -145,6 +145,7 @@ export default function GrammarGuru() {
     return (
         <div>
             <h1>Grammar Guru</h1>
+            <p className='pl-7 text-lg'>A game of hangman with a few extra bells and whistles</p>
             <div className="gg-content">
                 {/* box for game settings */}
                 <div className="sunken-box">
@@ -220,7 +221,7 @@ export default function GrammarGuru() {
 
             {/* game modal */}
             {showModal && (
-                <Modal onClose={() => setShowModal(false)} header={`Guesses remaining: ${currentGame?.remaining ?? 0}`} showModal={showModal}>
+                <Modal onClose={() => setShowModal(false)} header={`Guesses left: ${currentGame?.remaining ?? 0}`} showModal={showModal}>
                     <form onSubmit={submitGuess}>
                         <div className='input-inline' style={{ justifyContent: "center" }}>
                             <div className='pt-1'>
@@ -232,10 +233,10 @@ export default function GrammarGuru() {
                         </div>
                         <div className="input-inline">
                             {/* TODO: make each of the letters it's own thing with a background color and font size etc. */}
-                            <h2 className='p-2'>Current View: {currentGame?.phrase.split("").map((letter, key) => (
+                            <h2 className='p-2 view-text'>Current View: {currentGame?.phrase.split("").map((letter, key) => (
                                 <span key={key} className='guess-letter' style={{ color: currentGame?.textColor }}>{letter}</span>
                             ))}</h2>
-                            <h2 className="p-2 pl-5">
+                            <h2 className="p-2 view-text">
                                 Letters Guessed:
                                 <span className='guess-letters' style={{ fontFamily: currentGame?.font }}>
                                     {currentGame?.guesses?.split("").map((guess, key) => (
@@ -244,6 +245,7 @@ export default function GrammarGuru() {
                                 </span>
                             </h2>
                         </div>
+                        <h2 className="p-2">Status: {currentGame?.status}</h2>
                     </form>
                     <style jsx>{`
                         .guess-letter {
