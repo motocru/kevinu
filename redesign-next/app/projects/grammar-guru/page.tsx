@@ -2,6 +2,8 @@
 import './gg.css';
 import { useState } from "react";
 import Modal from "@/components/modal/modal";
+import { setToast, Toast } from '@/components/toast/toastFunction';
+import ToastList from '@/components/toast/ToastList/toastList';
 
 export interface Game {
     id: string;
@@ -36,6 +38,7 @@ export default function GrammarGuru() {
     const [currentGame, setCurrentGame] = useState<Game | undefined>(undefined);
     const [showModal, setShowModal] = useState(false);
     const [guess, setGuess] = useState("");
+    const [toasts, setToasts] = useState<Toast[]>([]);
 
     //consts for the game
     const fontOptions = ["Arial", "Times New Roman", "Courier New", "Verdana", "Georgia",
@@ -63,12 +66,16 @@ export default function GrammarGuru() {
             body: JSON.stringify(newGame),
         });
 
+        const newGameJson = await newGameResponse.json();
         if (newGameResponse.ok) {
-            const newGameJson = await newGameResponse.json();
             setCurrentGame(newGameJson);
         } else {
-            console.log("Failed to create game");
-            //TODO: show an error toast here
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: newGameJson.error,
+                type: "failure"
+            };
+            setToast(toast, setToasts);
         }
 
         //now fetch all games for the user
@@ -84,12 +91,16 @@ export default function GrammarGuru() {
     //gets the game
     async function getGame(gameId: string) {
         const game = await fetch(`/api/wordgame/${playerId}/${gameId}`);
+        const gameJson = await game.json();
         if (game.status !== 200) {
-            console.log("Failed to get game");
-            //TODO: show an error toast here
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: gameJson.error,
+                type: "failure"
+            };
+            setToast(toast, setToasts);
             return;
         }
-        const gameJson = await game.json();
         setCurrentGame(gameJson);
         setShowModal(true);
     }
@@ -105,12 +116,17 @@ export default function GrammarGuru() {
                 },
                 body: JSON.stringify({ guess: guess }),
             });
+            const gameJson = await game.json();
             if (game.status !== 200) {
                 console.log("Failed to submit guess");
-                //TODO: show an error toast here
+                const toast: Toast = {
+                    id: Date.now().toString(),
+                    message: gameJson.error,
+                    type: "failure"
+                };
+                setToast(toast, setToasts);
                 return;
             }
-            const gameJson = await game.json();
             setCurrentGame(gameJson);
 
             //get all the games for the user to update the list and clear the guess input
@@ -121,6 +137,10 @@ export default function GrammarGuru() {
             setGuess("");
         }
     }
+
+    const removeToast = (id: string) => {
+        setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
+    };
 
     return (
         <div>
@@ -161,6 +181,7 @@ export default function GrammarGuru() {
                         <button className="new-game-button" onClick={createGame}>New Game</button>
                     </div>
                 </div>
+                <ToastList data={toasts} position="bottom-right" removeToast={removeToast} />
                 {/* game table */}
                 <div className="game-area">
                     <table>
@@ -211,13 +232,16 @@ export default function GrammarGuru() {
                         </div>
                         <div className="input-inline">
                             {/* TODO: make each of the letters it's own thing with a background color and font size etc. */}
-                            <h2 className="p-2">
+                            <h2 className='p-2'>Current View: {currentGame?.phrase.split("").map((letter, key) => (
+                                <span key={key} className='guess-letter' style={{ color: currentGame?.textColor }}>{letter}</span>
+                            ))}</h2>
+                            <h2 className="p-2 pl-5">
                                 Letters Guessed:
-                                <div className='guess-letters' style={{ fontFamily: currentGame?.font }}>
-                                    {currentGame?.guesses?.split("").map((guess) => (
-                                        <span key={guess} className='guess-letter'>{guess}</span>
+                                <span className='guess-letters' style={{ fontFamily: currentGame?.font }}>
+                                    {currentGame?.guesses?.split("").map((guess, key) => (
+                                        <span key={key} className='guess-letter' style={{ color: currentGame?.guessColor }}>{guess}</span>
                                     ))}
-                                </div>
+                                </span>
                             </h2>
                         </div>
                     </form>
@@ -227,7 +251,6 @@ export default function GrammarGuru() {
                             padding: 2px 4px;
                             margin: 2px;
                             background-color: ${currentGame?.bgColor};
-                            color: ${currentGame?.guessColor};
                             font-family: ${currentGame?.font};
                         }
                     `}</style>
