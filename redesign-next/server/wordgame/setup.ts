@@ -65,8 +65,5 @@ export async function getGameById(id: string, user: string) {
         return null;
     }
     const game = result[0];
-    if (game.status === "In Progress") {
-        delete game.answer;
-    }
     return game;
 }

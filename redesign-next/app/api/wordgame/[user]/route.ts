@@ -55,6 +55,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
     const result = await InsertQuery("INSERT INTO wordgame SET ?", game);
     if (result.warningStatus === 0) {
         const game = await getGameById(gameID, user);
+        if (game) {
+            delete game.answer;
+        }
         return NextResponse.json(game, { status: 200 });
     }
     else {

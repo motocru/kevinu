@@ -3,13 +3,13 @@ import { getGameById } from "@/server/wordgame/setup";
 import { NextResponse } from "next/server";
 
 function replaceCharAt(phrase: string, answer: string, char: string) {
-    var newPhrase = phrase;
+    const phraseArray = phrase.split('');
     for (let i = 0; i < answer.length; i++) {
         if (answer[i] === char) {
-            newPhrase = newPhrase.substring(0, i) + char + newPhrase.substring(i + 1);
+            phraseArray[i] = char;
         }
     }
-    return newPhrase;
+    return phraseArray.join('');
 }
 
 //GET a single game from a specific user
@@ -17,6 +17,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ user
     const { user, id } = await params;
     const game = await getGameById(id, user);
     if (game) {
+        if (game.status === "In Progress") {
+            delete game.answer;
+        }
         return NextResponse.json(game, { status: 200 });
     }
     else {
@@ -49,8 +52,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
             game.guesses = "";
         }
         game.guesses += guess;
+        console.log(`Guess: ${guess}`);
+        console.log(`Answer: ${game.answer}`);
         if (game.answer?.includes(guess)) {
             game.phrase = replaceCharAt(game.phrase, game.answer, guess);
+            console.log(`Phrase: ${game.phrase}`);
             if (game.phrase === game.answer) {
                 game.status = "Victory";
             }
