@@ -1,5 +1,5 @@
 .timer-content {
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .timer-settings {
@@ -13,7 +13,23 @@
 .timer-settings label {
     padding: 0.5rem;
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1rem;
+}
+
+.timer-settings button {
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    background-color: #3c60f1;
+    color: #eae9e9;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.timer-settings button:hover {
+    background-color: #2318f0;
 }
 
 .select-input {
@@ -24,4 +40,33 @@
     color: #000000;
     cursor: pointer;
     transition: background-color 0.5s ease;
+}
+
+.select-input:hover {
+    background-color: #cfcfcf;
+}
+
+.item-selection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item-selection p {
+    font-size: 14px;
+}
+
+.item-selection input {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    transition: background-color 0.5s ease, width 0.25s ease, height 0.25s ease;
+}
+
+.item-selection input:hover {
+    background-color: #cfcfcf;
+    width: 1.5rem;
+    height: 1.5rem;
 }
