@@ -26,6 +26,14 @@ export default function Timer() {
         "Quake Live": Game.QuakeLive,
         "Quake Champions": Game.QuakeChampions
     };
+
+    async function createGame() {
+
+        setCurrentGame({
+            id: crypto.randomUUID(),
+            user: playerId
+        });
+    };
     return (
         <div>
             <h1>Timer</h1>
@@ -62,7 +70,7 @@ export default function Timer() {
                                 <label htmlFor="heavyArmor">Heavy Armor<p>(25 seconds)</p></label>
                             </div>
                         )}
-                        <button className="new-game-button">New Game</button>
+                        <button className="new-game-button" onClick={() => createGame()}>New Game</button>
                     </div>
                 </div>
                 <div className="timer-settings pt-2">
