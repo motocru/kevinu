@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import "./timer.css";
+import { gameRecord, QuakeGame, TimerCreateGame } from "@/server/timer/objects";
 
 interface TimerGame {
     id: string;
@@ -8,31 +9,46 @@ interface TimerGame {
 
 }
 
-enum Game {
-    QuakeLive,
-    QuakeChampions
-}
-
 export default function Timer() {
     const [currentGame, setCurrentGame] = useState<TimerGame | null>(null);
     const [playerId] = useState(() => crypto.randomUUID());
-    const [selectedGame, setSelectedGame] = useState(Game.QuakeLive);
+    const [selectedGame, setSelectedGame] = useState(QuakeGame.QuakeLive);
     const [rounds, setRounds] = useState(5);
     const [megaHealth, setMegaHealth] = useState(false);
     const [heavyArmor, setHeavyArmor] = useState(false);
 
     const roundsOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    const gameRecord: Record<string, Game> = {
-        "Quake Live": Game.QuakeLive,
-        "Quake Champions": Game.QuakeChampions
-    };
 
     async function createGame() {
-
-        setCurrentGame({
-            id: crypto.randomUUID(),
-            user: playerId
+        const items: string[] = [];
+        if (megaHealth) {
+            items.push('Mega');
+        }
+        if (heavyArmor) {
+            items.push('Heavy');
+        }
+        if (items.length === 0) {
+            //TODO: pop-up a toast error message
+            throw new Error("Please select at least one item");
+        }
+        const body: TimerCreateGame = {
+            rounds: rounds,
+            game: selectedGame,
+            items: items
+        };
+        const response = await fetch(`/api/timer/${playerId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
         });
+        if (!response.ok) {
+            //TODO: pop-up a toast error message
+            throw new Error("Failed to create game");
+        }
+        const data = await response.json();
+        setCurrentGame(data);
     };
     return (
         <div>
@@ -64,7 +80,7 @@ export default function Timer() {
                         <label>Item(s):</label>
                         <input type="checkbox" id="megaHealth" name="megaHealth" value="Mega Health" onChange={(e) => setMegaHealth(e.target.checked)} />
                         <label htmlFor="megaHealth">Mega Health<p>(35 seconds)</p></label>
-                        {selectedGame === Game.QuakeLive && (
+                        {selectedGame === QuakeGame.QuakeLive && (
                             <div className="item-selection">
                                 <input type="checkbox" id="heavyArmor" name="heavyArmor" value="Heavy Armor" onChange={(e) => setHeavyArmor(e.target.checked)} />
                                 <label htmlFor="heavyArmor">Heavy Armor<p>(25 seconds)</p></label>
