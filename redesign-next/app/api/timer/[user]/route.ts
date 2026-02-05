@@ -26,7 +26,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
 
     //insert one record per rounds for the game
     for (let i = 1; i <= body.rounds; i++) {
-
         const item = body.items[Math.floor(Math.random() * body.items.length)];
         const startTime = Math.floor(Math.random() * 60);
         var spawnTime = body.game === QuakeGame.QuakeLive ? item === "Mega" ? 35 : 25 : 30;
