@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "./timer.css";
 import { gameRecord, QuakeGame, TimerCreateGame } from "@/server/timer/objects";
+import { setToast, Toast } from "@/components/toast/toastFunction";
 
 interface TimerGame {
     id: string;
@@ -16,6 +17,7 @@ export default function Timer() {
     const [rounds, setRounds] = useState(5);
     const [megaHealth, setMegaHealth] = useState(false);
     const [heavyArmor, setHeavyArmor] = useState(false);
+    const [toasts, setToasts] = useState<Toast[]>([]);
 
     const roundsOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
@@ -28,8 +30,13 @@ export default function Timer() {
             items.push('Heavy');
         }
         if (items.length === 0) {
-            //TODO: pop-up a toast error message
-            throw new Error("Please select at least one item");
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: "Please select at least one item",
+                type: "failure"
+            };
+            setToast(toast, setToasts);
+            return;
         }
         const body: TimerCreateGame = {
             rounds: rounds,
@@ -49,6 +56,10 @@ export default function Timer() {
         }
         const data = await response.json();
         setCurrentGame(data);
+    };
+
+    const removeToast = (id: string) => {
+        setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
     };
     return (
         <div>
