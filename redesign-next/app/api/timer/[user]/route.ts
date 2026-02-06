@@ -2,13 +2,6 @@ import { DeleteQuery, InsertQuery, SelectQuery } from "@/server/db";
 import { TimerCreateGame, TimerGame, TimerRound, TimerFullGame, QuakeGame, gameRecord } from "@/server/timer/objects";
 import { NextResponse } from "next/server";
 
-//GET all of the timer game results for the user
-export async function GET(request: Request, { params }: { params: Promise<{ user: string }> }) {
-    const { user } = await params;
-
-    return new Response(`Hello ${user}`);
-}
-
 //POST a new timer game for the user
 export async function POST(request: Request, { params }: { params: Promise<{ user: string }> }) {
     const { user } = await params;
@@ -56,16 +49,19 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ user: string }> }) {
     const { user } = await params;
-    const result = await DeleteQuery("DELETE FROM timer WHERE user = ?", [user]);
-    if (result.warningStatus === 0) {
+    const gameDeleteResult = await DeleteQuery("DELETE FROM timer WHERE user = ?", [user]);
+    const roundDeleteResult = await DeleteQuery("DELETE FROM timer_round WHERE id = ?", [user]);
+    if (gameDeleteResult.warningStatus === 0 && roundDeleteResult.warningStatus === 0) {
         return NextResponse.json({ message: "Game deleted successfully" }, { status: 200 });
     }
     else {
+        console.log(gameDeleteResult);
+        console.log(roundDeleteResult);
         return NextResponse.json({ error: "Failed to delete game" }, { status: 500 });
     }
 }
 
-async function getFullTimerGame(gameId: string) {
+export async function getFullTimerGame(gameId: string) {
     const storedGame = await SelectQuery<TimerGame>("SELECT * FROM timer WHERE user = ?", [gameId]);
     const timerRoundStatement = 'SELECT id, item, startTime, round, guess, status, game, CASE WHEN status <> "In Progress" THEN spawnTime ELSE NULL END AS spawnTime FROM timer_round WHERE id = ? AND round <= ?';
     const rounds = await SelectQuery<TimerRound>(timerRoundStatement, [gameId, storedGame[0].currentRound]);

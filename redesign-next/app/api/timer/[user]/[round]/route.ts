@@ -1,12 +1,13 @@
 import { SelectQuery, UpdateQuery } from "@/server/db";
-import { TimerFullGame, TimerGame, TimerRound } from "@/server/timer/objects";
+import { TimerGame, TimerRound } from "@/server/timer/objects";
 import { NextResponse } from "next/server";
+import { getFullTimerGame } from "../route";
 
 export async function PUT(request: Request, { params }: { params: Promise<{ user: string, round: number }> }) {
     const { user, round } = await params;
     const { time } = await request.json() as { time: number };
 
-    if (!time || time > 59 || time < 0) {
+    if (time > 59 || time < 0) {
         return NextResponse.json({ error: "Time is required and must be between 0 and 59" }, { status: 400 });
     }
 
@@ -16,6 +17,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
         return NextResponse.json({ error: "Game not found" }, { status: 204 });
     }
     const storedGame = storedGameList[0];
+    console.log(`current round: ${storedGame.currentRound}, round: ${round}`);
     if (round != storedGame.currentRound) {
         return NextResponse.json({ error: "Cannot make a guess on a non-current round" }, { status: 400 });
     }
@@ -32,10 +34,10 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
     storedRound.guess = time;
     //check if the number guessed is correct
     if (time === storedRound.spawnTime) {
-        storedRound.status = 'Victory';
+        storedRound.status = 'Correct';
     }
     else {
-        storedRound.status = 'Loss';
+        storedRound.status = 'Incorrect';
     }
 
     if (storedGame.rounds !== round) {
@@ -50,22 +52,10 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
             return NextResponse.json({ error: "Failed to update game" }, { status: 500 });
         }
         //get all the rounds for the game up to this point
-        const rounds = await getGameRounds(user, round);
-        const completeGame: TimerFullGame = {
-            game: storedGame,
-            rounds: rounds
-        };
+        const completeGame = await getFullTimerGame(user);
         return NextResponse.json(completeGame, { status: 200 });
     }
     else {
         return NextResponse.json({ error: "Failed to update round" }, { status: 500 });
     }
-}
-
-async function getGameRounds(gameId: string, round: number) {
-    const storedRoundList = await SelectQuery<TimerRound>("SELECT * FROM timer_round WHERE id = ? AND round <= ?", [gameId, round]);
-    if (storedRoundList.length === 0) {
-        return [];
-    }
-    return storedRoundList;
 }
