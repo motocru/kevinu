@@ -70,3 +70,50 @@
     width: 1.5rem;
     height: 1.5rem;
 }
+
+.timer-game-guesser {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.inline-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.item-pickup-time-display p {
+    font-size: 1.75rem;
+}
+
+.timer-game-guesser input {
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 0.05rem;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 15px 0;
+    width: 100%;
+}
+
+th {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+}

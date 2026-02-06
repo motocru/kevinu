@@ -25,7 +25,7 @@ export async function UpdateQuery<T>(query: string, values: T): Promise<ResultSe
     return result as ResultSetHeader;
 }
 
-export async function DeleteQuery(query: string): Promise<ResultSetHeader> {
-    const [result] = await pool.query(query);
+export async function DeleteQuery<T>(query: string, values: T): Promise<ResultSetHeader> {
+    const [result] = await pool.query(query, values);
     return result as ResultSetHeader;
 }

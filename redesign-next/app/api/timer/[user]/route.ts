@@ -1,4 +1,4 @@
-import { InsertQuery, SelectQuery } from "@/server/db";
+import { DeleteQuery, InsertQuery, SelectQuery } from "@/server/db";
 import { TimerCreateGame, TimerGame, TimerRound, TimerFullGame, QuakeGame, gameRecord } from "@/server/timer/objects";
 import { NextResponse } from "next/server";
 
@@ -13,9 +13,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ user
 export async function POST(request: Request, { params }: { params: Promise<{ user: string }> }) {
     const { user } = await params;
     const body: TimerCreateGame = await request.json();
-    const gameID = crypto.randomUUID();
     const game: TimerGame = {
-        id: gameID,
         user: user,
         rounds: body.rounds,
         currentRound: 1,
@@ -34,12 +32,13 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
             spawnTime %= 60;
         }
         const round: TimerRound = {
-            id: gameID,
+            id: user,
             round: i,
             startTime: startTime,
             spawnTime: spawnTime,
             item: item,
-            status: "In Progress"
+            status: "In Progress",
+            game: game.game
         };
         const roundResult = await InsertQuery("INSERT INTO timer_round SET ?", round);
         if (roundResult.warningStatus !== 0) {
@@ -47,7 +46,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
         }
     }
     if (result.warningStatus === 0) {
-        const fullTimerGame = await getFullTimerGame(gameID);
+        const fullTimerGame = await getFullTimerGame(user);
         return NextResponse.json(fullTimerGame, { status: 200 });
     }
     else {
@@ -55,15 +54,24 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
     }
 }
 
+export async function DELETE(request: Request, { params }: { params: Promise<{ user: string }> }) {
+    const { user } = await params;
+    const result = await DeleteQuery("DELETE FROM timer WHERE user = ?", [user]);
+    if (result.warningStatus === 0) {
+        return NextResponse.json({ message: "Game deleted successfully" }, { status: 200 });
+    }
+    else {
+        return NextResponse.json({ error: "Failed to delete game" }, { status: 500 });
+    }
+}
+
 async function getFullTimerGame(gameId: string) {
-    const storedGame = await SelectQuery<TimerGame>("SELECT * FROM timer WHERE id = ?", [gameId]);
+    const storedGame = await SelectQuery<TimerGame>("SELECT * FROM timer WHERE user = ?", [gameId]);
+    const timerRoundStatement = 'SELECT id, item, startTime, round, guess, status, game, CASE WHEN status <> "In Progress" THEN spawnTime ELSE NULL END AS spawnTime FROM timer_round WHERE id = ? AND round <= ?';
+    const rounds = await SelectQuery<TimerRound>(timerRoundStatement, [gameId, storedGame[0].currentRound]);
     const returnGame: TimerFullGame = {
         game: storedGame[0],
-        rounds: []
+        rounds: rounds
     };
-    for (let i = 1; i < storedGame[0].currentRound; i++) {
-        const storedRound = await SelectQuery<TimerRound>("SELECT * FROM timer_round WHERE id = ? AND round = ?", [gameId, i]);
-        returnGame.rounds.push(storedRound[0]);
-    }
     return returnGame;
 }

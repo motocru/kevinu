@@ -1,5 +1,4 @@
 export interface TimerGame {
-    id: string;
     user: string;
     rounds: number;
     currentRound: number;
@@ -17,10 +16,11 @@ export interface TimerRound {
     id: string;
     item: string; //move into an enum
     startTime: number;
-    spawnTime: number;
+    spawnTime?: number;
     round: number;
     guess?: number;
     status: string; //move into an enum
+    game: string;
 }
 
 export interface TimerFullGame {
