@@ -51,7 +51,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .item-selection p {
@@ -76,7 +76,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .inline-content {
@@ -122,4 +122,55 @@ td {
 
 td {
     border-bottom: 1px solid #ccc;
+}
+
+@keyframes flash {
+    0% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.8);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+}
+
+@keyframes flyIn {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.round-updated {
+    animation: flash 0.7s ease-in-out;
+}
+
+.round-new {
+    animation: flyIn 0.7s ease-out;
+}
+
+@media (max-width: 758px) {
+    .item-selection {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .timer-game-guesser {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .timer-settings {
+        flex-direction: column;
+        gap: 5px;
+    }
 }

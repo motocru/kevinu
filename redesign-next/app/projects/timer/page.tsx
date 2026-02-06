@@ -17,6 +17,7 @@ export default function Timer() {
     const [currentRound, setCurrentRound] = useState<number>(0);
     const [guess, setGuess] = useState<number>(0);
     const [showModal, setShowModal] = useState(false);
+    const [lastGuessedRound, setLastGuessedRound] = useState<number | null>(null);
 
     const roundsOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 
@@ -39,6 +40,7 @@ export default function Timer() {
         }
         setCurrentRound(0);
         setCurrentGame(null);
+        setLastGuessedRound(null);
         if (currentGame) {
             await fetch(`/api/timer/${playerId}`, {
                 method: "DELETE"
@@ -95,6 +97,7 @@ export default function Timer() {
         }
 
         setCurrentGame(data);
+        setLastGuessedRound(currentRound);
         if ((currentGame?.game.currentRound ?? 0) < (currentGame?.game.rounds ?? 0)) {
             setCurrentRound(currentRound + 1);
         } else {
@@ -160,13 +163,10 @@ export default function Timer() {
                                         <p>Item: <strong>{currentGame.rounds[currentRound].item}</strong></p>
                                         <p>Pickup Time: <strong>{currentGame.rounds[currentRound].startTime}</strong></p>
                                     </div>
-                                    <div className="timer-game-guesser inline-content">
-                                        <form onSubmit={(e) => submitGuess(e)}>
-                                            <label htmlFor="spawnTime" style={{ fontSize: "1.75rem", padding: "0.5rem" }}>Spawn Time:</label>
-                                            <input type="number" id="spawnTime" name="spawnTime" onChange={(e) => setGuess(Number(e.target.value))} />
-                                            <span style={{ padding: "0.5rem" }}></span>
-                                            <button type="submit">Submit</button>
-                                        </form>
+                                    <form className="timer-game-guesser" onSubmit={(e) => submitGuess(e)}>
+                                        <label htmlFor="spawnTime" style={{ fontSize: "1.75rem", padding: "0.5rem" }}>Spawn Time:</label>
+                                        <input type="number" id="spawnTime" name="spawnTime" value={guess} onChange={(e) => setGuess(Number(e.target.value))} />
+                                        <button type="submit">Submit</button>
                                         <style jsx>{`
                                     .timer-game-guesser button {
                                         padding: 0.5rem;
@@ -187,7 +187,7 @@ export default function Timer() {
                                                     ? "#920f15" : "#00aa22"};
                                     }
                                 `}</style>
-                                    </div>
+                                    </form>
                                 </div>
                             )}
                         <div className="timer-game-table">
@@ -203,7 +203,7 @@ export default function Timer() {
                                 </thead>
                                 <tbody>
                                     {currentGame.rounds.map((round, index) => (
-                                        <tr key={index}>
+                                        <tr key={`${index}-${round.status}`} className={index === lastGuessedRound ? "round-updated" : round.status === "In Progress" ? "round-new" : ""}>
                                             <td>{round.round}</td>
                                             <td>{round.item}</td>
                                             <td>{round.startTime}</td>
