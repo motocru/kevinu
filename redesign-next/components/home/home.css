@@ -188,6 +188,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     height: 100%;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .project-image {
@@ -217,11 +220,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.project-links a {
-    font-size: 1.2rem;
-    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
