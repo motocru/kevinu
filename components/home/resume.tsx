@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import SectionComponent from "./sectionComponent";
 import { AiOutlineGithub } from "react-icons/ai";
 import { AiOutlineLinkedin } from "react-icons/ai";
@@ -119,13 +120,11 @@ export default function Resume({ idCallback }: { idCallback?: (id: string) => vo
                     </section>
                 </div>
                 <div className="flex justify-center">
-                    <button className="slide-button" style={{ fontSize: '22px' }}>
-                        <a href="/resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer">
-                            Download Resume
-                        </a>
-                    </button>
+                    <Link className="slide-button" style={{ fontSize: '22px' }} href="/resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        Download Resume
+                    </Link>
                 </div>
             </div>
         </SectionComponent>

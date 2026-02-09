@@ -19,9 +19,7 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             It is a website that I created to showcase my projects and my skills.
                             It is also a place where I can try out some new ideas and technologies.</p>
                         <div className="project-links">
-                            <button className="slide-button">
-                                <Link href="https://github.com/motocru/kevinu">GitHub Link</Link>
-                            </button>
+                            <Link className="slide-button" href="https://github.com/motocru/kevinu">GitHub Link</Link>
                         </div>
                     </div>
                 </div>
@@ -31,12 +29,8 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                         <p className="project-description">A game of Hangman with a few extra bells and whistles like color
                             scheme, difficulty and font selection.</p>
                         <div className="project-links">
-                            <button className="slide-button">
-                                <Link href="/projects/grammar-guru">Playable Version</Link>
-                            </button>
-                            <button className="slide-button">
-                                <Link href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
-                            </button>
+                            <Link className="slide-button" href="/projects/grammar-guru">Playable Version</Link>
+                            <Link className="slide-button" href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
                         </div>
                     </div>
                     <div className="project-image">
@@ -53,12 +47,8 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             Game supports Quake Live and Quake Champions timing.
                         </p>
                         <div className="project-links">
-                            <button className="slide-button">
-                                <Link href="/projects/timer">Playable Version</Link>
-                            </button>
-                            <button className="slide-button">
-                                <Link href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
-                            </button>
+                            <Link className="slide-button" href="/projects/timer">Playable Version</Link>
+                            <Link className="slide-button" href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
                         </div>
                     </div>
                 </div>
@@ -70,12 +60,8 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             define their own words to track.
                         </p>
                         <div className="project-links">
-                            <button className="slide-button">
-                                <Link href="/projects/timer">Discord Application Link</Link>
-                            </button>
-                            <button className="slide-button">
-                                <Link href="https://github.com/motocru/curse-bot">GitHub Link</Link>
-                            </button>
+                            <Link className="slide-button" href="/projects/timer">Discord Application Link</Link>
+                            <Link className="slide-button" href="https://github.com/motocru/curse-bot">GitHub Link</Link>
                         </div>
                     </div>
                     <div className="project-image">

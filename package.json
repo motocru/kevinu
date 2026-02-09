@@ -1,34 +1,37 @@
 {
-  "name": "kevinu",
-  "version": "1.0.0",
-  "description": "repository for my personal website",
-  "main": "index.js",
+  "name": "redesign-next",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "set NODE_ENV=development && next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "set NODE_ENV=production && next start"
+    "start": "next start",
+    "lint": "eslint"
   },
-  "author": "Kevin J. Urban",
-  "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "es6-promise": "^4.2.8",
-    "express-session": "^1.17.1",
-    "file-loader": "^4.3.0",
-    "fs": "0.0.1-security",
-    "image-webpack-loader": "^5.1.0",
-    "isomorphic-fetch": "^2.2.1",
-    "isomorphic-unfetch": "^3.1.0",
-    "mongodb": "^3.6.3",
-    "next": "^9.5.5",
-    "node-fetch": "^2.6.1",
-    "path": "^0.12.7",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "reactstrap": "^8.7.1",
-    "uuid": "^3.4.0"
+    "framer-motion": "^12.23.26",
+    "fs": "^0.0.1-security",
+    "mysql2": "^3.16.0",
+    "next": "16.0.10",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "react-icons": "^5.5.0",
+    "react-intersection-observer": "^10.0.0",
+    "resend": "^6.6.0",
+    "tsx": "^4.20.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/cors": "^2.8.19",
+    "@types/node": "^20.19.27",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "baseline-browser-mapping": "^2.9.19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.10",
+    "nodemon": "^3.1.11",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
