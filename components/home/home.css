@@ -1,0 +1,234 @@
+.section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.section-content {
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.section-header {
+    position: relative;
+    padding-top: 5rem;
+    margin-bottom: 0;
+    top: 0;
+    padding-bottom: 0;
+}
+
+.section-header h1 {
+    margin: 0;
+}
+
+.split-screen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-element {
+    opacity: 0;
+    transform: translateY(100px);
+    /* The transition property defines the duration and curve */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    /* Use different transition speeds to match the varying durations
+     in Svelte, e.g., 0.6s is a reasonable duration. */
+}
+
+/* Final state: Visible (equivalent to Svelte's y: 0) */
+.title-element.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tech-element {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.tech-element.is-visible {
+    opacity: 1;
+}
+
+.view-work-button {
+    border: 2px solid #f7f6f6;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px 28px;
+    color: #f6f4f4;
+    border-width: 1px;
+    border-radius: 15px;
+    position: relative;
+    transition: color 0.6s ease, border-color 0.6s ease;
+}
+
+.view-work-button:hover {
+    background-color: #5a5959;
+    border-color: rgb(207, 2, 2);
+    color: rgb(207, 2, 2);
+}
+
+.profile-image {
+    width: 40%;
+    border-radius: 50%;
+    padding: 15px;
+}
+
+.tech-images {
+    width: 6rem;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.tech-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.tech-column {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.contact-form-container {
+    position: relative;
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-form input {
+    padding: 1rem;
+    min-width: 25rem;
+    border-radius: 5px;
+    border: 1px solid #f7f6f6;
+}
+
+.contact-form textarea {
+    padding: 1rem;
+    min-width: 25rem;
+    min-height: 10rem;
+    border-radius: 5px;
+    border: 1px solid #f7f6f6;
+}
+
+.contact-form-submit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+.contact-form-pane {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.submit-column {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.footer {
+    background-color: #383838;
+    padding: 2rem;
+    margin-left: -3rem;
+    margin-right: -3rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.footer-image {
+    font-size: 2rem;
+    color: white;
+    transition: font-size 0.4s ease;
+}
+
+.footer-image:hover {
+    font-size: 2.5rem;
+}
+
+.project-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    padding-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.project-image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.project-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.project-description {
+    font-size: 1.2rem;
+}
+
+.project-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .split-screen {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .pane {
+        padding: 1rem;
+    }
+}

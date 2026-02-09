@@ -1,0 +1,150 @@
+.gg-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sunken-box {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr;
+    background-color: #828282;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    width: 85%;
+    min-height: 100px;
+}
+
+.new-game-button {
+    background-color: #5755cd;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.new-game-button:hover {
+    background-color: #3431d8;
+}
+
+.setting-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+}
+
+.setting-section label {
+    padding: 0.5rem;
+    font-weight: bold;
+}
+
+.setting-section select {
+    border: 2px solid #000000;
+    border-radius: 5px;
+    padding: 0.35rem;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.setting-section select:hover {
+    background-color: #cfcfcf;
+}
+
+.setting-section input {
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 0.05rem;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.setting-section input:hover {
+    background-color: #cfcfcf;
+}
+
+.game-area {
+    width: 85%;
+}
+
+.input-inline {
+    display: flex;
+    flex-direction: row;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 15px 0;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.guess-input {
+    text-align: center;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 0.05rem;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+}
+
+.guess-submit {
+    background-color: #5755cd;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.guess-submit:hover {
+    background-color: #3431d8;
+}
+
+.view-text {
+    font-size: 20px;
+}
+
+@media (max-width: 1209px) {
+    .sunken-box {
+        grid-template-columns: 1fr;
+    }
+
+    .input-inline {
+        flex-direction: column;
+    }
+
+    .view-text {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 586px) {
+    .sunken-box {
+        grid-template-columns: 1fr;
+    }
+
+    .setting-section {
+        flex-direction: column;
+    }
+
+    .view-text {
+        font-size: 10px;
+    }
+}
