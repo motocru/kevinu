@@ -3,10 +3,18 @@ import { TimerGame, TimerRound } from "@/server/timer/objects";
 import { NextResponse } from "next/server";
 import { getFullTimerGame } from "../route";
 
-export async function PUT(request: Request, { params }: { params: Promise<{ user: string, round: number }> }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ user: string, round: string }> }) {
     const { user, round } = await params;
     const { time } = await request.json() as { time: number };
-
+    let parsedRound: number;
+    try {
+        parsedRound = parseInt(round);
+        if (isNaN(parsedRound)) {
+            return NextResponse.json({ error: "Round is required and must be a number" }, { status: 400 });
+        }
+    } catch (error) {
+        return NextResponse.json({ error: "Round is required and must be a number" }, { status: 400 });
+    }
     if (time > 59 || time < 0) {
         return NextResponse.json({ error: "Time is required and must be between 0 and 59" }, { status: 400 });
     }
@@ -17,13 +25,13 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
         return NextResponse.json({ error: "Game not found" }, { status: 204 });
     }
     const storedGame = storedGameList[0];
-    console.log(`current round: ${storedGame.currentRound}, round: ${round}`);
-    if (round != storedGame.currentRound) {
+    console.log(`current round: ${storedGame.currentRound}, round: ${parsedRound}`);
+    if (parsedRound != storedGame.currentRound) {
         return NextResponse.json({ error: "Cannot make a guess on a non-current round" }, { status: 400 });
     }
 
     //get the round specified from the database
-    const storedRoundList = await SelectQuery<TimerRound>("SELECT * FROM timer_round WHERE id = ? AND round = ?", [user, round]);
+    const storedRoundList = await SelectQuery<TimerRound>("SELECT * FROM timer_round WHERE id = ? AND round = ?", [user, parsedRound]);
     if (storedRoundList.length === 0) {
         return NextResponse.json({ error: "Round not found" }, { status: 204 });
     }
@@ -40,11 +48,11 @@ export async function PUT(request: Request, { params }: { params: Promise<{ user
         storedRound.status = 'Incorrect';
     }
 
-    if (storedGame.rounds !== round) {
+    if (storedGame.rounds !== parsedRound) {
         storedGame.currentRound++;
     }
     //update the round in the database
-    const updateResult = await UpdateQuery("UPDATE timer_round SET ? WHERE id = ? AND round = ?", [storedRound, user, round]);
+    const updateResult = await UpdateQuery("UPDATE timer_round SET ? WHERE id = ? AND round = ?", [storedRound, user, parsedRound]);
     if (updateResult.warningStatus === 0) {
         //update the game in the database
         const updateGameResult = await UpdateQuery("UPDATE timer SET ? WHERE user = ?", [storedGame, user]);
