@@ -17,7 +17,7 @@
     padding-top: 5rem;
     margin-bottom: 0;
     top: 0;
-    padding-bottom: 0;
+    padding-bottom: 10px;
 }
 
 .section-header h1 {
@@ -186,7 +186,8 @@
 
 .project-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    /* Stack by default */
     height: 100%;
     padding-bottom: 4rem;
     padding-left: 2rem;
@@ -198,6 +199,37 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    /* Added for pseudo-element positioning */
+    z-index: 1;
+    transition: transform 0.3s ease;
+    /* Smooth hover transition */
+}
+
+.project-image::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: -20px;
+    bottom: -20px;
+    left: 20px;
+    background-color: blue;
+    z-index: -1;
+    /* Place behind the image */
+    transition: opacity 0.3s ease;
+}
+
+.project-image:hover {
+    transform: scale(0.95);
+    /* Shrink slightly */
+    cursor: pointer;
+    /* Clickable div appearance */
+}
+
+.project-image img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 .project-info {
@@ -205,6 +237,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2rem;
+    z-index: 2;
 }
 
 .project-title {
@@ -230,5 +264,40 @@
 
     .pane {
         padding: 1rem;
+    }
+
+    .project-title {
+        font-size: 1.2rem;
+    }
+
+    .project-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    /* Already stacking by default, just adjusting font sizes */
+    .project-title {
+        font-size: 1.5rem;
+    }
+
+    .project-description {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1024.01px) {
+    .project-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Alternate layout for even containers */
+    .project-container:nth-child(even) .project-info {
+        order: 2;
+    }
+
+    .project-container:nth-child(even) .project-image {
+        order: 1;
     }
 }

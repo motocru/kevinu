@@ -10,9 +10,6 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
             </div>
             <div className="section-content">
                 <div className="project-container">
-                    <div className="project-image">
-                        <img src='/projects/kevin-u.com.png' alt='kevinu-com' />
-                    </div>
                     <div className="project-info">
                         <h2 className="project-title">Kevin-u.com</h2>
                         <p className="project-description">The website you are currently on!
@@ -22,6 +19,11 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             <Link className="slide-button" href="https://github.com/motocru/kevinu">GitHub Link</Link>
                         </div>
                     </div>
+                    <Link href="https://github.com/motocru/kevinu">
+                        <div className="project-image">
+                            <img src='/projects/kevin-u.com.png' alt='kevinu-com' />
+                        </div>
+                    </Link>
                 </div>
                 <div className="project-container">
                     <div className="project-info">
@@ -33,14 +35,13 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             <Link className="slide-button" href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
                         </div>
                     </div>
-                    <div className="project-image">
-                        <img src='/projects/grammarGuru.png' alt='grammarGuru' />
-                    </div>
+                    <Link href="/projects/grammar-guru">
+                        <div className="project-image">
+                            <img src='/projects/grammarGuru.png' alt='grammarGuru' />
+                        </div>
+                    </Link>
                 </div>
                 <div className="project-container">
-                    <div className="project-image">
-                        <img src='/projects/quakeTimer.png' alt='quakeTimer' />
-                    </div>
                     <div className="project-info">
                         <h2 className="project-title">Quake Timer</h2>
                         <p className="project-description">A game made to help with timing out item spawns for competitive Quake players.
@@ -51,6 +52,11 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             <Link className="slide-button" href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
                         </div>
                     </div>
+                    <Link href="/projects/timer">
+                        <div className="project-image">
+                            <img src='/projects/quakeTimer.png' alt='quakeTimer' />
+                        </div>
+                    </Link>
                 </div>
                 <div className="project-container">
                     <div className="project-info">
@@ -60,13 +66,15 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                             define their own words to track.
                         </p>
                         <div className="project-links">
-                            <Link className="slide-button" href="/projects/timer">Discord Application Link</Link>
+                            <Link className="slide-button" href="https://discord.com/developers/applications/544133743632187403/information">Discord Application Link</Link>
                             <Link className="slide-button" href="https://github.com/motocru/curse-bot">GitHub Link</Link>
                         </div>
                     </div>
-                    <div className="project-image">
-                        <img src='/projects/curseBot.png' alt='curseBot' />
-                    </div>
+                    <Link href="https://discord.com/developers/applications/544133743632187403/information">
+                        <div className="project-image">
+                            <img src='/projects/curseBot.png' alt='curseBot' />
+                        </div>
+                    </Link>
                 </div>
             </div>
         </SectionComponent>
