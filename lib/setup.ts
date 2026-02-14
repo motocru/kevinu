@@ -8,7 +8,7 @@ var wordlist: string[] = [];
 
 function getWordlist() {
     if (wordlist.length === 0) {
-        const filePath = path.join(process.cwd(), 'server', 'wordgame', 'wordlist.txt');
+        const filePath = path.join(process.cwd(), 'lib', 'wordlist.txt');
         var data = fs.readFileSync(filePath);
         wordlist = data.toString().split(/\r?\n/);
         return wordlist;

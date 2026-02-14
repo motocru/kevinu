@@ -1,5 +1,5 @@
 import { UpdateQuery } from "@/server/db";
-import { getGameById } from "@/server/wordgame/setup";
+import { getGameById } from "@/lib/setup";
 import { NextResponse } from "next/server";
 
 function replaceCharAt(phrase: string, answer: string, char: string) {

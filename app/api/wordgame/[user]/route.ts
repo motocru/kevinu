@@ -1,6 +1,6 @@
 import { SelectQuery, InsertQuery } from "@/server/db";
 import { NextResponse } from "next/server";
-import { GameData, GameRow, getGameById, getWordlist, levelData, NewGameBody } from "@/server/wordgame/setup";
+import { GameData, GameRow, getGameById, getWordlist, levelData, NewGameBody } from "@/lib/setup";
 
 
 function wordPick(level: levelData) {

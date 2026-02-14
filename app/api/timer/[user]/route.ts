@@ -1,5 +1,5 @@
 import { DeleteQuery, InsertQuery, SelectQuery } from "@/server/db";
-import { TimerCreateGame, TimerGame, TimerRound, TimerFullGame, QuakeGame, gameRecord } from "@/server/timer/objects";
+import { TimerCreateGame, TimerGame, TimerRound, TimerFullGame, QuakeGame, gameRecord } from "@/lib/objects";
 import { NextResponse } from "next/server";
 
 //POST a new timer game for the user

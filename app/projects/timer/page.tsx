@@ -1,7 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import "./timer.css";
-import { gameRecord, QuakeGame, TimerCreateGame, TimerFullGame } from "@/server/timer/objects";
+import { gameRecord, QuakeGame, TimerCreateGame, TimerFullGame } from "@/lib/objects";
 import { setToast, Toast } from "@/components/toast/toastFunction";
 import ToastList from '@/components/toast/ToastList/toastList';
 import Modal from "@/components/modal/modal";

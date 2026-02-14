@@ -1,5 +1,5 @@
 import { SelectQuery, UpdateQuery } from "@/server/db";
-import { TimerGame, TimerRound } from "@/server/timer/objects";
+import { TimerGame, TimerRound } from "@/lib/objects";
 import { NextResponse } from "next/server";
 import { getFullTimerGame } from "../route";
 
