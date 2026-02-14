@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: kevinu-web
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    restart: always
+  db:
+    image: mysql:8.0
+    container_name: kevinu-db
+    env_file:
+      - ./.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - kevinu-db-data:/var/lib/mysql
+      - ./server/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+volumes:
+  kevinu-db-data:
