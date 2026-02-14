@@ -10,7 +10,18 @@ services:
       - db
     env_file:
       - ./.env
-    restart: always
+    restart: unless-stopped
+  nginx:
+    image: nginx:alpine
+    container_name: kevinu-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - web
+    restart: unless-stopped
   db:
     image: mysql:8.0
     container_name: kevinu-db

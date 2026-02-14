@@ -49,7 +49,7 @@ export default function Projects({ idCallback }: { idCallback?: (id: string) => 
                         </p>
                         <div className="project-links">
                             <Link className="slide-button" href="/projects/timer">Playable Version</Link>
-                            <Link className="slide-button" href="https://github.com/motocru/GrammarGuru">GitHub Link</Link>
+                            <Link className="slide-button" href="https://github.com/motocru/kevinu/tree/master/app/projects/timer">GitHub Link</Link>
                         </div>
                     </div>
                     <Link href="/projects/timer">
