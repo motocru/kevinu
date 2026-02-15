@@ -4,6 +4,10 @@ on:
   push:
     branches: ["master"] # Triggers whenever you push to master
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
