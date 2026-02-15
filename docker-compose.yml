@@ -1,7 +1,7 @@
 services:
   web:
-    build: .
-    container_name: kevinu-web
+    image: ghcr.io/motocru/kevinu:latest
+    container_name: kevinu
     ports:
       - "3000:3000"
     depends_on:
