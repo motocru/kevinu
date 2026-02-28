@@ -108,10 +108,3 @@ html {
     transform: rotate(360deg);
   }
 }
-
-@media (max-width: 768px) {
-  .nav-wrapper {
-    margin-left: -3rem;
-    margin-right: -3rem;
-  }
-}

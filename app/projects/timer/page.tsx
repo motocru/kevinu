@@ -75,7 +75,7 @@ export default function Timer() {
 
     async function submitGuess(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (guess === "") {
+        if (!Number.isFinite(guess)) {
             const toast: Toast = {
                 id: Date.now().toString(),
                 message: `Failed to submit guess.\nNo guess was entered`,
@@ -132,7 +132,7 @@ export default function Timer() {
                             ))}
                         </select>
                     </div>
-                    <span className="separator">|</span>
+                    <span className="separator" aria-hidden="true">|</span>
                     <div className="rounds-selection">
                         <label>Rounds:</label>
                         <select className="select-input" value={rounds} onChange={(e) => setRounds(Number(e.target.value))}>
@@ -174,7 +174,15 @@ export default function Timer() {
                                     </div>
                                     <form className="timer-game-guesser" onSubmit={(e) => submitGuess(e)}>
                                         <label htmlFor="spawnTime" className="spawn-time-label">Spawn Time:</label>
-                                        <input type="number" id="spawnTime" name="spawnTime" value={guess} onChange={(e) => setGuess(e.target.value === "" ? "" : Number(e.target.value))} />
+                                        <input
+                                            type="number"
+                                            min={0}
+                                            max={59}
+                                            id="spawnTime"
+                                            name="spawnTime"
+                                            value={guess}
+                                            onChange={(e) => setGuess(e.target.value === "" ? "" : Number(e.target.value))}
+                                        />
                                         <button type="submit">Submit</button>
                                         <style jsx>{`
                                     .timer-game-guesser button {
