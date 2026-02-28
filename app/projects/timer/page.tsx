@@ -15,7 +15,7 @@ export default function Timer() {
     const [heavyArmor, setHeavyArmor] = useState(false);
     const [toasts, setToasts] = useState<Toast[]>([]);
     const [currentRound, setCurrentRound] = useState<number>(0);
-    const [guess, setGuess] = useState<number>(0);
+    const [guess, setGuess] = useState<number | "">("");
     const [showModal, setShowModal] = useState(false);
     const [lastGuessedRound, setLastGuessedRound] = useState<number | null>(null);
 
@@ -75,6 +75,15 @@ export default function Timer() {
 
     async function submitGuess(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        if (!Number.isFinite(guess)) {
+            const toast: Toast = {
+                id: Date.now().toString(),
+                message: `Failed to submit guess.\nNo guess was entered`,
+                type: "failure"
+            };
+            setToast(toast, setToasts);
+            return;
+        }
         const response = await fetch(`/api/timer/${playerId}/${currentRound + 1}`, {
             method: "PUT",
             headers: {
@@ -83,7 +92,7 @@ export default function Timer() {
             body: JSON.stringify({ time: guess })
         });
         //clear out the guess once we are back from the fetch
-        setGuess(0);
+        setGuess("");
         const data = await response.json();
         //verify the response and then update the current game and round
         if (response.status !== 200) {
@@ -123,7 +132,7 @@ export default function Timer() {
                             ))}
                         </select>
                     </div>
-                    |
+                    <span className="separator" aria-hidden="true">|</span>
                     <div className="rounds-selection">
                         <label>Rounds:</label>
                         <select className="select-input" value={rounds} onChange={(e) => setRounds(Number(e.target.value))}>
@@ -164,8 +173,16 @@ export default function Timer() {
                                         <p>Pickup Time: <strong>{currentGame.rounds[currentRound].startTime}</strong></p>
                                     </div>
                                     <form className="timer-game-guesser" onSubmit={(e) => submitGuess(e)}>
-                                        <label htmlFor="spawnTime" style={{ fontSize: "1.75rem", padding: "0.5rem" }}>Spawn Time:</label>
-                                        <input type="number" id="spawnTime" name="spawnTime" value={guess} onChange={(e) => setGuess(Number(e.target.value))} />
+                                        <label htmlFor="spawnTime" className="spawn-time-label">Spawn Time:</label>
+                                        <input
+                                            type="number"
+                                            min={0}
+                                            max={59}
+                                            id="spawnTime"
+                                            name="spawnTime"
+                                            value={guess}
+                                            onChange={(e) => setGuess(e.target.value === "" ? "" : Number(e.target.value))}
+                                        />
                                         <button type="submit">Submit</button>
                                         <style jsx>{`
                                     .timer-game-guesser button {
@@ -185,6 +202,12 @@ export default function Timer() {
                                         background-color: ${currentGame.rounds[currentRound].item === "Mega"
                                                 ? "#2677d3" : currentGame.rounds[currentRound].game === "Quake Live"
                                                     ? "#920f15" : "#00aa22"};
+                                    }
+
+                                    @media (max-width: 758px) {
+                                        .timer-game-guesser button {
+                                            font-size: 0.8rem;
+                                        }
                                     }
                                 `}</style>
                                     </form>
