@@ -27,9 +27,9 @@ export default function Home({ idCallback }: { idCallback?: (id: string) => void
         <SectionComponent id="home" callback={idCallback}>
             <div className="section-content">
                 <div className="pane">
-                    <h1 className={`text-5xl ${getVisible(isH1Visible)}`}>Kevin Urban</h1>
-                    <h2 className={`text-3xl ${getVisible(isH2Visible)}`}>Full Stack Developer</h2>
-                    <p className={`text-xl ${getVisible(isPVisible)}`}>
+                    <h1 className={`text-5xl home-title ${getVisible(isH1Visible)}`}>Kevin Urban</h1>
+                    <h2 className={`text-3xl home-title ${getVisible(isH2Visible)}`}>Full Stack Developer</h2>
+                    <p className={`text-xl home-title ${getVisible(isPVisible)}`}>
                         My name is Kevin Urban and I am a full stack developer with a passion for creating
                         innovative and user-friendly web applications.
                     </p>

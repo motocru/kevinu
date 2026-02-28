@@ -211,6 +211,12 @@ export default function GrammarGuru() {
                                             font-family: ${game.font};
                                             font-size: 20px;
                                         }
+
+                                        @media (max-width: 1024px) {
+                                            .letters {
+                                                font-size: 10px;
+                                            }
+                                        }
                                     `}</style>
                                 </tr>
                             ))}

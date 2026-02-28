@@ -133,6 +133,12 @@ td {
     .view-text {
         font-size: 14px;
     }
+
+    .setting-section {
+        padding: 0.25rem;
+    }
+
+
 }
 
 @media (max-width: 586px) {
@@ -146,5 +152,18 @@ td {
 
     .view-text {
         font-size: 10px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th,
+    td {
+        padding: 5px;
+    }
+
+    .game-area {
+        margin-left: -3rem;
     }
 }

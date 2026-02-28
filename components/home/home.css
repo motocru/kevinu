@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
 }
 
 .section-content {
@@ -284,6 +283,22 @@
 
     .project-description {
         font-size: 1rem;
+    }
+
+    .home-title {
+        padding: 0.5rem;
+    }
+
+    .contact-form input {
+        min-width: 20rem;
+    }
+
+    .contact-form textarea {
+        min-width: 20rem;
+    }
+
+    .profile-image {
+        width: 55%;
     }
 }
 
